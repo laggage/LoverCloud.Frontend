@@ -2,5 +2,148 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1, 
   "newProjectRoot": "projects",
-  "projects": {}
+  "projects": {
+    "lover-cloud": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:class": {
+          "skipTests": true
+        },
+        "@schematics/angular:component": {
+          "skipTests": true
+        },
+        "@schematics/angular:directive": {
+          "skipTests": true
+        },
+        "@schematics/angular:guard": {
+          "skipTests": true
+        },
+        "@schematics/angular:interceptor": {
+          "skipTests": true
+        },
+        "@schematics/angular:module": {
+          "skipTests": true
+        },
+        "@schematics/angular:pipe": {
+          "skipTests": true
+        },
+        "@schematics/angular:service": {
+          "skipTests": true
+        }
+      },
+      "root": "projects/lover-cloud",
+      "sourceRoot": "projects/lover-cloud/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/lover-cloud",
+            "index": "projects/lover-cloud/src/index.html",
+            "main": "projects/lover-cloud/src/main.ts",
+            "polyfills": "projects/lover-cloud/src/polyfills.ts",
+            "tsConfig": "projects/lover-cloud/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "projects/lover-cloud/src/favicon.ico",
+              "projects/lover-cloud/src/assets"
+            ],
+            "styles": [
+              "projects/lover-cloud/src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/lover-cloud/src/environments/environment.ts",
+                  "with": "projects/lover-cloud/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "lover-cloud:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "lover-cloud:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "lover-cloud:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/lover-cloud/src/test.ts",
+            "polyfills": "projects/lover-cloud/src/polyfills.ts",
+            "tsConfig": "projects/lover-cloud/tsconfig.spec.json",
+            "karmaConfig": "projects/lover-cloud/karma.conf.js",
+            "assets": [
+              "projects/lover-cloud/src/favicon.ico",
+              "projects/lover-cloud/src/assets"
+            ],
+            "styles": [
+              "projects/lover-cloud/src/styles.css"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/lover-cloud/tsconfig.app.json",
+              "projects/lover-cloud/tsconfig.spec.json",
+              "projects/lover-cloud/e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/lover-cloud/e2e/protractor.conf.js",
+            "devServerTarget": "lover-cloud:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "lover-cloud:serve:production"
+            }
+          }
+        }
+      }
+    }},
+  "defaultProject": "lover-cloud"
 }
