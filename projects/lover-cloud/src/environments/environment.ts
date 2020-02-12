@@ -3,7 +3,14 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiHostUrl: 'http://localhost:3089/',
+  registerEndPoint: 'api/users',
+  authentication: {
+    hostUrl: 'http://localhost:3088/',
+    tokenEndPoint: 'connect/token'
+  },
+  localStorageTokenKey: 'LC.Cache'
 };
 
 /*
