@@ -1,0 +1,57 @@
+:host {
+    height: 100%;
+    width: 100%;
+    display: block;
+    overflow: hidden;
+}
+
+#wrapper {
+    height: 100%;
+    width: 100%;
+}
+
+#content {
+    height: 90%;
+    max-height: 90%;
+    overflow-y: auto;
+    margin: 0;
+    padding: 0;
+    background: greenyellow;
+    background: var(--color-gray9);
+}
+
+#nav-bottom {
+    height: 10%;
+    max-height: 10%;
+    background: hotpink;
+    background: var(--color-white);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.btn-nav {
+    width: 25%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    padding: auto 16px;
+    color: var(--color-accent);
+    outline: none;
+}
+.btn-nav p {
+    margin: 0;
+}
+
+.btn-nav, .btn-nav svg path {
+    fill: var(--color-gray2);
+    color: var(--color-gray2);
+}
+
+.btn-nav-active, .btn-nav-active svg path {
+    fill: var(--color-accent);
+    color: var(--color-accent);
+}

@@ -6,18 +6,21 @@ import { AuthenticationRoutingModule } from './authentication-routing.module';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthentionComponent } from './authention.component';
-
+import { AntdModule } from '../../shared/antd-module/antd-module.module';
+import { AuthLogoComponent } from './auth-logo/auth-logo.component';
 
 @NgModule({
   declarations: [
     AuthentionComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    AuthLogoComponent
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    AuthenticationRoutingModule
+    AuthenticationRoutingModule,
+    AntdModule
   ]
 })
 export class AuthenticationModule { }

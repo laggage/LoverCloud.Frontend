@@ -11,6 +11,7 @@ const routes: Routes = [
         .then(x => x.AuthenticationModule),
     pathMatch: 'full'
   },
+  { path: 'lover', redirectTo: 'lover/index' },
   {
     path: 'lover',
     loadChildren: () =>

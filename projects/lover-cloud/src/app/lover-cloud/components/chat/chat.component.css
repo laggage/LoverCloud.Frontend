@@ -1,14 +1,16 @@
+
 :host {
+    height: 100%;
     display: block;
-    width: 100%;
+    position: relative;
 }
 
-#loading-icon {
+nz-alert {
     display: block;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    width: 85%;
+    text-align: center;
 }
-
-

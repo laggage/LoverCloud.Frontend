@@ -1,0 +1,9 @@
+:host {
+    display: block;
+    margin: auto .5rem;
+    margin-top: 1rem;
+}
+
+.card {
+    background: var(--color-accent4);
+}

@@ -1,59 +1,108 @@
 <div class="wrapper">
-    <form class="form mt-3"
-          [formGroup]="userInfoForm"
-          (ngSubmit)="onSubmit($event)"
-          enctype="multipart/form-data">
-        <div class="form-item">
-            <label class="d-inline-block">头像:</label>
-            <img class="profile-img" [src]="imgData" *ngIf="imgData" alt="profile-img">
-            <input accept="image/gif,image/png,image/jpeg,image/jpg"
-                   type="file" title="用户头像"
-                   [src]="imgData"
-                   (change)="fileChange($event.target.files)">
+    <ng-template #indicatorTemplate >
+        <div id="loading-icon" class="">
+            <i nz-icon
+               class="d-block"
+               nzType="loading"
+               style="font-size: 24px; color: var(--color-accent4);"></i>
+            <span class="text-accent d-block mt-2">正在处理...</span>
         </div>
-        <div class="form-item">
-            <label>用户名:</label>
-            <input formControlName="userName"
-                   type="text"
-                   placeholder="输入用户名">
-        </div>
-        <div class="form-item">
-            <label>邮箱:</label>
-            <input formControlName="email"
-                   type="text"
-                   placeholder="你的邮箱">
-        </div>
-        <div class="form-item">
-            <label class="my-0">
-                性别:
-                <label class="mx-3 my-0" for="sex">男<input class="mx-1" name="sex"
-                           formControlName="sex"
-                           value="男"
-                           type="radio"></label>
-                <label class="my-0" for="sex">女<input class="mx-1" name="sex"
-                           formControlName="sex"
-                           value="女"
-                           type="radio"></label>
-            </label>
-        </div>
-        <div class="form-item">
-            <label>生日:</label>
-            <input formControlName="birth"
-                   type="date">
-        </div>
-        <div class="form-item">
-            <label>密码:</label>
-            <input formControlName="password"
-                   type="password"
-                   placeholder="用于登录的密码">
-        </div>
-        <div class="mt-3 row px-3">
-            <input type="submit"
-                   class="col mr-2 btn"
-                   value="确定">
-            <button [routerLink]="['/auth/login']"
-                    routerLinkActive="router-link-active"
-                    class="btn btn-secondary col ml-2">去登录</button>
-        </div>
-    </form>
+    </ng-template>
+    <nz-spin [nzSpinning]="status === 'uploading'"
+             [nzIndicator]="indicatorTemplate"
+             [nzSimple]="false">
+        <form class="form mt-3"
+              [formGroup]="userInfoForm"
+              (ngSubmit)="onSubmit($event)"
+              enctype="multipart/form-data">
+            <div class="d-flex align-items-stretch ">
+                <!-- <p class="" *ngIf="imgData">用户头像:</p> -->
+                <nz-upload class="avatar-uploader w-auto"
+                           nzName="avatar"
+                           nzListType="picture-card"
+                           [nzFileType]="'image/png,image/jpeg,image/jpg,image/gif,image/bmp'"
+                           [nzShowUploadList]="false"
+                           (nzChange)="fileChange($event.file.originFileObj)">
+                    <ng-container *ngIf="!imgData">
+                        <i class="upload-icon"
+                           nz-icon
+                           [nzType]="'plus'"></i>
+                        <div class="ant-upload-text">用户头像</div>
+                    </ng-container>
+                    <img class="avatar profile-img"
+                         *ngIf="imgData"
+                         [src]="imgData" />
+                </nz-upload>
+
+                <div id="status-error"
+                     *ngIf="status==='error'" 
+                     class="overflow-auto"
+                     style="max-height: 98px;">
+                    <nz-alert nzType="error"
+                              nzCloseable
+                              nzMessage="操作失败"
+                              [nzDescription]="error">
+                    </nz-alert>
+                </div>
+
+            </div>
+
+            <div class="form-item">
+                <label>用户名:</label>
+                <input formControlName="userName"
+                       type="text"
+                       placeholder="输入用户名">
+            </div>
+            <div class="form-item">
+                <label>邮箱:</label>
+                <input formControlName="email"
+                       type="text"
+                       placeholder="你的邮箱">
+            </div>
+            <div class="form-item">
+                <label class="my-0">
+                    性别:
+                    <label class="mx-3 my-0"
+                           for="sex">男<input class="mx-1"
+                               name="sex"
+                               formControlName="sex"
+                               value="男"
+                               type="radio"></label>
+                    <label class="my-0"
+                           for="sex">女<input class="mx-1"
+                               name="sex"
+                               formControlName="sex"
+                               value="女"
+                               type="radio"></label>
+                </label>
+            </div>
+            <div class="form-item">
+                <label>生日:</label>
+                <input formControlName="birth"
+                       type="date">
+            </div>
+            <div class="form-item">
+                <label>密码:</label>
+                <input formControlName="password"
+                       type="password"
+                       placeholder="用于登录的密码">
+            </div>
+
+            <div id="status">
+                <div id="status-uploading">
+
+                </div>
+            </div>
+
+            <div class="mt-3 row px-3">
+                <input type="submit"
+                       class="col mr-2 btn"
+                       value="确定">
+                <button [routerLink]="['/auth/login']"
+                        routerLinkActive="router-link-active"
+                        class="btn btn-secondary col ml-2">去登录</button>
+            </div>
+        </form>
+    </nz-spin>
+
 </div>

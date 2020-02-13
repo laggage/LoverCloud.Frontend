@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1, 
+  "version": 1,
   "newProjectRoot": "projects",
   "projects": {
     "lover-cloud": {
@@ -46,11 +46,16 @@
             "aot": true,
             "assets": [
               "projects/lover-cloud/src/favicon.ico",
-              "projects/lover-cloud/src/assets"
+              "projects/lover-cloud/src/assets",
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
+                "output": "/assets/"
+              }
             ],
             "styles": [
-              "node_modules/bootstrap/dist/css/bootstrap.css",
-              "projects/lover-cloud/src/styles.css",
+              "projects/lover-cloud/src/theme.less",
+              "projects/lover-cloud/src/styles.css"
             ],
             "scripts": []
           },
@@ -145,6 +150,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "lover-cloud"
 }

@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   apiHostUrl: 'http://localhost:3089/',
   registerEndPoint: 'api/users',
+  userEndPoint: 'api/users',
   authentication: {
     hostUrl: 'http://localhost:3088/',
     tokenEndPoint: 'connect/token'

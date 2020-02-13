@@ -53,7 +53,7 @@ export class AuthService {
     let formData: FormData = new FormData();
     for (let key in loginMetadata) {
       formData.append(key, loginMetadata[key]);
-      console.log(key, loginMetadata[key]);
+      // console.log(key, loginMetadata[key]);
     }
     
     return new Observable<HttpResponse<Token>|HttpErrorResponse>(s => {
