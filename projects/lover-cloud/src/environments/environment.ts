@@ -6,12 +6,14 @@ export const environment = {
   production: false,
   apiHostUrl: 'http://localhost:3089/',
   registerEndPoint: 'api/users',
+  loverLogsEndPoint: 'api/lovers/logs',
   userEndPoint: 'api/users',
   authentication: {
     hostUrl: 'http://localhost:3088/',
     tokenEndPoint: 'connect/token'
   },
-  localStorageTokenKey: 'LC.Cache'
+  localStorageTokenKey: 'LC.Cache',
+  paginationHeaderKey: 'x-pagination'
 };
 
 /*

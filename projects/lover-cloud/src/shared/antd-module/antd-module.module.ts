@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NzSpinModule, NZ_ICONS, NzIconModule, NzAlertModule, NzMessageModule, NzUploadModule, NzAvatarModule } from 'ng-zorro-antd';
+import { NzSpinModule, NZ_ICONS, NzIconModule, NzAlertModule, NzMessageModule, NzUploadModule, NzAvatarModule, NzAffixModule, NzPageHeaderModule, NzInputModule, NzTimelineModule } from 'ng-zorro-antd';
 import { IconDefinition } from '@ant-design/icons-angular';
 import * as AllIcons from '@ant-design/icons-angular/icons';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -29,7 +29,11 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons)
     NzAlertModule,
     NzMessageModule,
     NzUploadModule,
-    NzAvatarModule
+    NzAvatarModule,
+    NzAffixModule,
+    NzPageHeaderModule,
+    NzInputModule,
+    NzTimelineModule
   ],
   providers: [{ provide: NZ_ICONS, useValue: icons }, authInterceptor]
 })

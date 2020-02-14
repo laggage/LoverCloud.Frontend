@@ -11,7 +11,6 @@ import { NzSpinModule } from 'ng-zorro-antd';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserService } from './authentication/services/user.service';
-import { LoverService } from './lover-cloud/services/lover.service';
 import { AuthInterceptor } from './authentication/services/auth.interceptor';
 
 
@@ -35,8 +34,7 @@ export const authInterceptor = [
   providers: [
     AuthService,
     UserService,
-    LoverService,
-    authInterceptor
+    authInterceptor,
   ],
   bootstrap: [AppComponent]
 })

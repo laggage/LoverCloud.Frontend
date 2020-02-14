@@ -5,8 +5,9 @@ import { throwError, Observable } from 'rxjs';
 import { Token } from 'projects/lover-cloud/src/shared/models/token';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'projects/lover-cloud/src/environments/environment';
-import { catchError } from 'rxjs/operators';
+import { catchError, retry } from 'rxjs/operators';
 import { ImageService } from '../../lover-cloud/services/image.service';
+import { Sex } from 'projects/lover-cloud/src/shared/models/sex.enum';
 
 @Injectable()
 export class UserService {
@@ -22,29 +23,27 @@ export class UserService {
   public getUser(refresh: boolean = false): Observable<User|HttpErrorResponse> {
     return new Observable(s => {
       let token: Token = this.authServ.getToken();
-      // console.log(token);
       if (!token || !token.access_token || token.access_token.length < 1) {
         s.next(null);
       }
       if (!this.user || refresh) {
         this.http.get<User>(this.useGetUrl, {
-          headers: {
-            'Authorization': `Bearer ${token.access_token}`
-          },
           observe: 'response'
         }).pipe(
+          retry(2),
           catchError((error: HttpErrorResponse) => {
             return new Observable<HttpErrorResponse>(s => s.next(error));
           })
         ).subscribe(u => {
           if(u.ok && u.status === 200) {
             u.body.spouse = Object.assign(new User(this.imgServ), u.body.spouse);
+            u.body.sex = Sex[u.body.sex.toString().toLocaleLowerCase()];
+            u.body.spouse.sex = Sex[u.body.spouse.sex.toString().toLocaleLowerCase()];
             s.next(Object.assign(new User(this.imgServ), u.body)); 
           } else s.next(u as HttpErrorResponse);
         });
       } else {
-        this.user.spouse = Object.assign(new User(this.imgServ), this.user.spouse);
-        s.next(Object.assign(new User(this.imgServ), this.user));
+        s.next(this.user);
       }
     });
   }

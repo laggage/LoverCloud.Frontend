@@ -22,19 +22,14 @@ export class ImageService {
           reader.onload = () => {
             s.next(reader.result);
             s.complete();
-            console.log('complete');
           }
           reader.onerror = () => {
             s.next(null);
             s.complete();
-            console.log('complete');
-
           }
         } else {
           s.next(response);
           s.complete();
-          console.log('complete');
-
         }
       })
     })

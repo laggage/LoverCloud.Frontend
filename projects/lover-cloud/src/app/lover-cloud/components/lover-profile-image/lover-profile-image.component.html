@@ -1,0 +1,10 @@
+<div class="px-2">
+    <nz-avatar nzIcon="user"
+               [nzSrc]="user ? (user.profileImageUrl|authenticationImageUrl|async) : ''"
+               [nzSize]="64"
+               class="mr-1"></nz-avatar>
+    <nz-avatar nzIcon="user"
+               class="ml-1"
+               [nzSrc]="user && user.spouse ? (user.spouse.profileImageUrl|authenticationImageUrl|async) : ''"
+               [nzSize]="64"></nz-avatar>
+</div>

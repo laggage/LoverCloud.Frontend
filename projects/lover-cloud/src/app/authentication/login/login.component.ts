@@ -40,9 +40,7 @@ export class LoginComponent implements OnInit {
       s => {
         if(s.ok) { // 登录成功
           this.logginStatus = 'success';
-          this.message.success('登录成功', {
-            nzDuration: 50000
-          });
+          this.message.success('登录成功');
           this.router.navigateByUrl('/lover/index');
         } else {
           let error = s as HttpErrorResponse;

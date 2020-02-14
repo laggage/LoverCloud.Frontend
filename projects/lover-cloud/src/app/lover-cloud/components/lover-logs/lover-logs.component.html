@@ -1,0 +1,136 @@
+<!-- 新建情侣时光按钮 -->
+<nz-affix routerLink="./add"
+          class="btn-affix">
+    <div class="btn-affix-content">
+        <svg t="1581654388390"
+             class="icon"
+             viewBox="0 0 1024 1024"
+             version="1.1"
+             xmlns="http://www.w3.org/2000/svg"
+             p-id="1950"
+             width="48"
+             height="48">
+            <path d="M1024 427.84 596.224 427.84 596.224 0 427.84 0 427.84 427.84 0 427.84 0 596.224 427.84 596.224 427.84 1024 596.224 1024 596.224 596.224 1024 596.224Z"
+                  p-id="1951"
+                  fill="#e6e6e6"></path>
+        </svg>
+    </div>
+</nz-affix>
+
+<div id="wrapper">
+    <div id="top-nav">
+        <ng-template #backIcon>
+            <svg t="1581656190833"
+                 class="icon"
+                 viewBox="0 0 1024 1024"
+                 version="1.1"
+                 xmlns="http://www.w3.org/2000/svg"
+                 p-id="2733"
+                 width="24"
+                 height="24">
+                <path d="M178 544l356 329-44 46L49 512l441-407 44 46-356 329h782v64H178z"
+                      p-id="2734"
+                      fill="#e6e6e6"></path>
+            </svg>
+        </ng-template>
+        <nz-page-header [nzBackIcon]="backIcon"
+                        class="page-header text-light  text-center"
+                        [nzGhost]="true">
+            <nz-page-header-title class="d-flex m-auto align-items-center text-white">时光记录</nz-page-header-title>
+        </nz-page-header>
+    </div>
+    <div id="header">
+        <div id="header-content">
+            <app-lover-profile-image></app-lover-profile-image>
+            <span class="text-bolder">我们在一起 <br /> <span style="font-size: 2rem;">100 </span> 天 </span>
+        </div>
+    </div>
+
+    <div id="content">
+        <div>
+            <ng-template #pending >
+                <div *ngIf="paginationData.hasNext">
+                    <button href="." (click)="getLoverLog()">加载更多</button>
+                </div>
+            </ng-template>
+            <nz-timeline [nzPending]="pending" [nzPendingDot]="iconPending">
+                <ng-template #iconBoy>
+                    <svg t="1581685658952"
+                         class="icon"
+                         viewBox="0 0 1077 1024"
+                         version="1.1"
+                         xmlns="http://www.w3.org/2000/svg"
+                         p-id="2508"
+                         width="10"
+                         height="10">
+                        <path d="M781.474 0c-93.777 0-183.781 43.655-242.527 112.64C480.202 43.655 390.197 0 296.421 0 130.425 0 0 130.425 0 296.421 0 500.143 183.242 666.14 460.8 918.366l78.147 70.602 78.148-71.14c277.558-251.69 460.8-417.685 460.8-621.407C1077.895 130.425 947.469 0 781.474 0z"
+                              fill="#1296db"
+                              p-id="2509"></path>
+                    </svg>
+                </ng-template>
+                <ng-template #iconGirl>
+                    <svg t="1581685658952"
+                         class="icon"
+                         viewBox="0 0 1077 1024"
+                         version="1.1"
+                         xmlns="http://www.w3.org/2000/svg"
+                         p-id="2508"
+                         width="10"
+                         height="10">
+                        <path d="M781.474 0c-93.777 0-183.781 43.655-242.527 112.64C480.202 43.655 390.197 0 296.421 0 130.425 0 0 130.425 0 296.421 0 500.143 183.242 666.14 460.8 918.366l78.147 70.602 78.148-71.14c277.558-251.69 460.8-417.685 460.8-621.407C1077.895 130.425 947.469 0 781.474 0z"
+                              fill="#FF647F"
+                              p-id="2509"></path>
+                    </svg>
+                </ng-template>
+                <ng-template #iconLover>
+                    <svg t="1581685658952"
+                         class="icon"
+                         viewBox="0 0 1077 1024"
+                         version="1.1"
+                         xmlns="http://www.w3.org/2000/svg"
+                         p-id="2508"
+                         width="10"
+                         height="10">
+                        <path d="M781.474 0c-93.777 0-183.781 43.655-242.527 112.64C480.202 43.655 390.197 0 296.421 0 130.425 0 0 130.425 0 296.421 0 500.143 183.242 666.14 460.8 918.366l78.147 70.602 78.148-71.14c277.558-251.69 460.8-417.685 460.8-621.407C1077.895 130.425 947.469 0 781.474 0z"
+                              fill="#F472D0"
+                              p-id="2509"></path>
+                    </svg>
+                </ng-template>
+                <ng-template #iconPending>
+                    <svg t="1581687853951"
+                         class="icon"
+                         viewBox="0 0 1024 1024"
+                         version="1.1"
+                         xmlns="http://www.w3.org/2000/svg"
+                         p-id="2979"
+                         width="12"
+                         height="12">
+                        <path d="M960.71414 512.524956c0 247.661589-200.771653 448.432219-448.434266 448.432219-247.661589 0-448.431196-200.769606-448.431196-448.432219C63.849702 264.86132 264.618285 64.092737 512.279874 64.092737 759.942487 64.092737 960.71414 264.86132 960.71414 512.524956zM512.524444 439.177438c0 0-11.652388-120.903627-131.015939-120.750131 0 0-164.240645 1.534959-128.424928 208.242811 29.67588 135.076418 258.417561 240.98861 258.417561 240.98861s147.835-70.096475 210.256678-148.379399c62.421678-78.283947 57.283658-173.450401 43.490513-215.405955-37.862329-93.120864-130.47154-85.446068-130.47154-85.446068S522.019703 320.985572 512.524444 439.177438z"
+                              p-id="2980"
+                              fill="#F472D0"></path>
+                    </svg>
+                </ng-template>
+                <nz-timeline-item *ngFor="let log of loverLogs"
+                                  [nzDot]="getTimeLineIcon(log)">
+                    <div class="px-2 rounded py-1"
+                         [class.bg-light-gray]="!log.loverPhotos || log.loverPhotos.length === 0">
+                        <div>
+                            {{log.content}}
+                        </div>
+                        <div *ngFor="let img of log.loverPhotos">
+                            <img *ngIf="img && img.url"
+                                 class=" rounded"
+                                 [src]="img && img.url ? (img.url|authenticationImageUrl|async): ''"
+                                 style="height: 60px; width: 64px;"
+                                 alt="说说图片">
+                        </div>
+                    </div>
+                    <div class="px-2">
+                        {{ log.createDateTime|date }}
+                    </div>
+                </nz-timeline-item>
+            </nz-timeline>
+
+        </div>
+    </div>
+</div>

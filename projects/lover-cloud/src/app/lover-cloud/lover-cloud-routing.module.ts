@@ -4,6 +4,8 @@ import { LoverCloudComponent } from './lover-cloud.component';
 import { IndexComponent } from './components/index/index.component';
 import { AlbumComponent } from './components/album/album.component';
 import { ChatComponent } from './components/chat/chat.component';
+import { LoverLogsComponent } from './components/lover-logs/lover-logs.component';
+import { LoverLogAddComponent } from './components/lover-log-add/lover-log-add.component';
 
 const routes: Routes = [
   // { path: 'lover', component: LoverCloudComponent, pathMatch: 'full'},
@@ -12,7 +14,10 @@ const routes: Routes = [
       { path: 'index', component: IndexComponent },
       { path: '', component: IndexComponent },
       { path: 'album', component: AlbumComponent },
-      { path: 'chat', component: ChatComponent }
+      { path: 'chat', component: ChatComponent },
+      { path: 'log', component: LoverLogsComponent, children: [
+        
+      ] },{ path: 'log/add', component: LoverLogAddComponent }
     ]
   },
 

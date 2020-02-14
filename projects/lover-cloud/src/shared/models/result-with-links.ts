@@ -1,6 +1,6 @@
 import { Links } from './link';
 
-export class ResultWithLinks {
+export class ResultWithLinks<T> {
     public links: Links;
-    public value: any;
+    public value: T[];
 }

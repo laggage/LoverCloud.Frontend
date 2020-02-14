@@ -15,7 +15,6 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     let token = this.authServ.getToken();
-    console.log('拦截器')
     if(!token || !token.access_token || token.access_token.length<1){
       return next.handle(request);
     } else {

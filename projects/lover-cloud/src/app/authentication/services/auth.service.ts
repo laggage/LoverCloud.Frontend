@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { Observable, observable, throwError } from 'rxjs';
 import { User } from 'projects/lover-cloud/src/shared/models/user';
 import { UserAddResource } from 'projects/lover-cloud/src/shared/models/user-add-resource';
-import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse, HttpResponseBase } from '@angular/common/http';
 import { environment } from 'projects/lover-cloud/src/environments/environment';
 import { catchError, retry } from 'rxjs/operators';
 import { UserLoginMetadata } from 'projects/lover-cloud/src/shared/models/user-login-metadata';
 import { Token } from 'projects/lover-cloud/src/shared/models/token';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthService {
@@ -53,7 +54,6 @@ export class AuthService {
     let formData: FormData = new FormData();
     for (let key in loginMetadata) {
       formData.append(key, loginMetadata[key]);
-      // console.log(key, loginMetadata[key]);
     }
     
     return new Observable<HttpResponse<Token>|HttpErrorResponse>(s => {
@@ -85,17 +85,43 @@ export class AuthService {
   public getToken(): Token {
     let token: Token;
     token = Object.assign(new Token(), JSON.parse(localStorage.getItem(environment.localStorageTokenKey)));
-    if (token.access_token === null || token.access_token.length < 1) {
+    if (!token.access_token || token.access_token.length < 1) {
       return null;
     }
     return token;
   }
 
   public isAuthenticate(): boolean {
-    if (this.getToken() === null) {
+    if (!this.getToken()) {
       return false;
     } else {
       return true;
     }
+  }
+
+  /**
+   * 判断http响应的内容是否为401 Unauthorized
+   * @param response http响应
+   */
+  public static isUnauthorizedResponse(response: HttpResponseBase) {
+    if(response && response.status === 401) {
+      return true;
+    } else return false;
+  }
+
+  /**
+   * 根据http响应判断是否该请求没有通过身份验证， 如果是， 跳转到认证页面
+   * @param response http响应
+   * @param router 路由器
+   */
+  public static toAuthPageIfUnauthorized(response: HttpResponseBase, router: Router) {
+    if(!response || this.isUnauthorizedResponse(response)) {
+      this.deleteToken();
+      router.navigateByUrl('auth/login');
+    } 
+  }
+
+  private static deleteToken() {
+    localStorage.removeItem(environment.localStorageTokenKey);
   }
 }

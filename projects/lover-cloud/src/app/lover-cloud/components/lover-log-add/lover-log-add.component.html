@@ -1,0 +1,81 @@
+<div id="wrapper-header">
+    <ng-template #backIcon>
+        <svg t="1581656190833"
+             class="icon"
+             viewBox="0 0 1024 1024"
+             version="1.1"
+             xmlns="http://www.w3.org/2000/svg"
+             p-id="2733"
+             width="24"
+             height="24">
+            <path d="M178 544l356 329-44 46L49 512l441-407 44 46-356 329h782v64H178z"
+                  p-id="2734"
+                  fill="#e6e6e6"></path>
+        </svg>
+    </ng-template>
+    <nz-page-header [nzBackIcon]="backIcon"
+                    [nzGhost]="true">
+        <nz-page-header-title style="height: 42px; width: max-content;"
+                              class="d-flex align-items-center text-light">
+            <div class="d-flex flex-row justify-content-around align-items-end">
+                <span>发布时光</span>
+            </div>
+        </nz-page-header-title>
+        <nz-page-header-extra style="height: 42px;"
+                              class="w-auto align-items-center py-0 d-flex justify-content-end">
+            <h5 (click)="onSubmit()" class="p-2 m-0 text-light font-weight-bolder">完成</h5>
+        </nz-page-header-extra>
+    </nz-page-header>
+</div>
+
+<div class="content mt-3">
+    <form [formGroup]="loverLogForm"
+          class="w-100 px-3">
+        <textarea formControlName="content"
+                  class="w-100"
+                  rows="8"
+                  nz-input
+                  placeholder="这一刻, 我想说..."
+                  type="text"
+                  [nzAutosize]="false"
+                  style="resize: none;">
+
+        </textarea>
+        <div class="d-flex align-items-start mt-3 flex-wrap justify-content-between">
+            <nz-upload class="w-auto m-0"
+                       nzListType="picture-card"
+                       [nzFileType]="'image/png,image/jpeg,image/jpg,image/gif,image/bmp'"
+                       [(nzFileList)]="files"
+                       [nzShowUploadList]="false">
+                <ng-container>
+                    <svg t="1581661305198"
+                         class="icon"
+                         viewBox="0 0 1024 1024"
+                         version="1.1"
+                         xmlns="http://www.w3.org/2000/svg"
+                         p-id="4794"
+                         width="32"
+                         height="32">
+                        <path d="M341.333333 339.626667m-55.68 0a55.68 55.68 0 1 0 111.36 0 55.68 55.68 0 1 0-111.36 0Z"
+                              fill="#3C3D3F"
+                              p-id="4795"></path>
+                        <path d="M567.253333 853.333333H198.4A27.946667 27.946667 0 0 1 170.666667 825.386667V721.066667l175.146666-172.586667 89.813334 41.386667a21.333333 21.333333 0 0 0 23.893333-4.266667l234.666667-234.666667L853.333333 501.546667v65.706666a21.333333 21.333333 0 1 0 42.666667 0V198.613333A70.613333 70.613333 0 0 0 825.386667 128H198.4A70.613333 70.613333 0 0 0 128 198.613333v626.773334A70.613333 70.613333 0 0 0 198.4 896h368.853333a21.333333 21.333333 0 1 0 0-42.666667zM170.666667 198.613333A27.946667 27.946667 0 0 1 198.4 170.666667h626.986667A27.946667 27.946667 0 0 1 853.333333 198.613333v244.053334l-144.64-137.173334a21.333333 21.333333 0 0 0-29.653333 0L439.893333 544.853333l-89.6-41.386666a21.333333 21.333333 0 0 0-23.893333 4.266666L170.666667 661.333333z"
+                              fill="#3C3D3F"
+                              p-id="4796"></path>
+                        <path d="M874.666667 711.253333h-120.746667v-120.746666a21.333333 21.333333 0 0 0-42.666667 0v120.746666h-120.746666a21.333333 21.333333 0 0 0 0 42.666667h120.746666V874.666667a21.333333 21.333333 0 0 0 42.666667 0v-120.746667H874.666667a21.333333 21.333333 0 0 0 0-42.666667z"
+                              fill="#3C3D3F"
+                              p-id="4797"></path>
+                    </svg>
+                    <!-- <div class="ant-upload-text">Upload</div> -->
+                </ng-container>
+            </nz-upload>
+            <div class="upload-img-list mr-2 mb-2" *ngFor="let file of files">
+                <img class="w-100 h-100" [src]="file.thumbUrl" alt="previewImage">
+            </div>
+            <div class="upload-img-list mr-2 mb-2" style="visibility: hidden;" >
+            </div>
+            <div class="upload-img-list mr-2 mb-2" style="visibility: hidden;" >
+            </div>
+        </div>
+    </form>
+</div>
