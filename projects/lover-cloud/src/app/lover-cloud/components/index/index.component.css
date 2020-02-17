@@ -23,7 +23,6 @@
 .below {
     height: 50%;
     width: 100%;
-    /* background-color: var(--color-gray9); */
     background-image: url("../../../../assets/2.svg");
     background-repeat: no-repeat;
     background-size:  100%;
@@ -53,7 +52,7 @@
 }
 
 #btn-card-container {
-    padding-top: 42px; /* 去除头像高度 */
+    margin-top: 42px; /* 去除头像高度 */
     position: absolute;
     top: 0;
     height: 100%;

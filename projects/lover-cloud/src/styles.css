@@ -5,6 +5,8 @@
 @import "~ng-zorro-antd/message/style/index.min.css"; /* 引入组件样式 */
 @import "~ng-zorro-antd/upload/style/index.min.css"; /* 引入组件样式 */
 @import "~ng-zorro-antd/avatar/style/index.min.css"; /* 引入组件样式 */
+@import "~ng-zorro-antd/carousel/style/index.min.css"; /* 引入组件样式 */
+@import "~ng-zorro-antd/date-picker/style/index.min.css"; /* 引入组件样式 */
 
 /* 覆盖bootstrap中的这个属性, 在Antd的message组件中造成有一些不好的效果 */
 svg {
@@ -17,7 +19,7 @@ svg {
     --color-accent: #F472D0CC;
     --color-accent2: #F472D099;
     --color-accent3: #F472D066;
-    --color-accent4: #F472D0;
+    --color-accent4: #F472D028;
 
     --color-black: #000000FF;
     --color-white: #FFFFFFFF;
@@ -37,17 +39,19 @@ svg {
     color: var(--color-accent);
 }
 
+.text-large {
+    font-size: 1.3rem;
+}
+
 * {
     box-sizing: border-box;
+    outline: none !important;
 }
 
 html, body {
     margin: 0;
     padding: 0;
-    height: 100%;
-    min-width: 320px;
-    min-height: 700px;
-    overflow-y: hidden;
+    /* overflow-y: hidden; */
     box-sizing: border-box;
 }
 
@@ -64,15 +68,21 @@ input[type=password] {
 }
 
 input[type=text]:hover, 
-input[type='date']:hover, 
+input[type=date]:hover, 
+.ant-calendar-picker-input:hover,
+/* .ant-calendar-picker:hover, */
+.ant-calendar-picker:hover .ant-calendar-picker-input:not(.ant-input-disabled),
 input[type=password]:hover {
-    box-shadow: 0 0 0 2px var(--color-gray2);
+    border-color: var(--color-accent-base);
+    box-shadow: 0 0 1px 1px var(--color-accent-base);
 }
 
 input[type=text]:focus, 
-input[type='date']:focus, 
+input[type=date]:focus, 
+.ant-calendar-picker-input:focus,
 input[type=password]:focus {
-    box-shadow: 0 0 0 1px var(--color-gray1);
+    border-color: var(--color-accent-base);
+    box-shadow: 0 0 1px 1px var(--color-accent-base);
 }
 
 input[type=submit] {
@@ -94,16 +104,18 @@ input[type=submit]:focus {
     color: var(--color-white);
 }
 
+input[type=submit]:disabled {
+    opacity: 0.6;
+    background: var(--color-accent);
+    color: var(--color-white);
+}
+
 .form {
     padding: 4px 8px;
     overflow: hidden;
     display: block;
     margin: auto;
     width: 100%;
-    /* position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%); */
 }
 
 .form .form-item {
@@ -141,4 +153,42 @@ button:focus,
 
 .page-header nz-page-header-title {
     height: 42px;
+}
+
+.img-clipable {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.preview-image-modal>.ant-modal-content {
+    background: none;
+    box-shadow: none;
+}
+
+.ant-page-header-heading {
+    display: flex;
+    align-items: center;
+}
+
+.ant-calendar-header a:hover {
+    color: var(--color-accent);
+  }
+
+.ant-calendar-date:hover {
+background: var(--color-accent4);
+cursor: pointer;
+}
+.ant-calendar-date:active {
+color: #fff;
+background: var(--color-accent) !important;
+}
+.ant-calendar-today .ant-calendar-date {
+color: var(--color-accent);
+font-weight: bold;
+border-color: var(--color-accent);
+}
+
+.ant-calendar-selected-day .ant-calendar-date {
+background: var(--color-accent4);
 }

@@ -1,0 +1,45 @@
+<div id="top-nav">
+    <ng-template #navExtraContent>
+        <svg t="1581933412966"
+             (click)="newAnniversary()"
+             class="icon"
+             viewBox="0 0 1024 1024"
+             version="1.1"
+             xmlns="http://www.w3.org/2000/svg"
+             p-id="11369"
+             width="32"
+             height="32">
+            <path d="M903.249869 413.138388 549.600363 413.138388 549.600363 55.423287 496.247224 55.423287 496.247224 413.138388 120.749108 413.138388 120.749108 466.490503 496.247224 466.490503 496.247224 837.923024 549.600363 837.923024 549.600363 466.490503 903.249869 466.490503Z"
+                  p-id="11370"
+                  fill="#ffffff"></path>
+        </svg>
+    </ng-template>
+    <app-nav-header title="纪念日"
+                    [extraContent]="navExtraContent"></app-nav-header>
+</div>
+
+<div id="content">
+    <div class="anniversay-item" *ngFor="let anniversary of anniversaries; let i = index">
+        <div class="content">
+            <div class="date" [class.date-bg-special]="i === anniversaries.length - 1">
+                <span class="text-large">{{anniversary.date|date:'d'}}</span>
+                <span>{{anniversary.date|date:'yyyy M'}}</span>
+            </div>
+            <div class="description">
+                <span class="">{{anniversary.name}}</span>
+                <!-- <span>{{anniversary.description}}</span> -->
+            </div>
+            <div class="days">
+                <span class="text-large">{{anniversary.timeSpan.day}}</span> 天
+            </div>
+        </div>
+        <div *ngIf="anniversary.isLoading" class="mask mask-loading">
+            <ng-template #indicatorTemplate><i nz-icon nzType="loading" style="font-size: 24px; color: var(--color-accent);"></i> </ng-template>
+            <nz-spin nzSimple [nzIndicator]="indicatorTemplate"></nz-spin>
+        </div>
+        <div *ngIf="!anniversary.isLoading" class="mask mask-operation">
+            <span (click)="deleteAnniversary(anniversary)" class="btn-icon"><i nz-icon nzType="delete" nzTheme="outline"></i></span>
+            <span class="btn-icon"><i nz-icon nzType="edit" nzTheme="outline"></i></span>
+        </div>
+    </div>
+</div>

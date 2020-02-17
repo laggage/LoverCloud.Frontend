@@ -1,13 +1,16 @@
 :host {
-    position: absolute;
-    height: 100%;
-    width: 100%;
+    top: 0;
+    left: 0;
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
     background: white;
+    z-index: 30;
 }
 
 .btn-affix {
-    min-width: 64px;
-    min-height: 64px;
+    min-width: 52px;
+    min-height: 52px;
     background: var(--color-accent-base);
     border-radius: 50%;
     position: absolute;
@@ -16,8 +19,8 @@
     align-items: center;
     display: flex;
     justify-content: center;
-    z-index: 20;
-  
+    z-index: 20;  
+    opacity: 0.85;
 }
 
 .btn-affix .btn-affix-content {
@@ -52,8 +55,6 @@
 }
 
 #content {
-    /* height: 70%; */
     padding-top: 1rem;
     padding: 1.2rem 1rem;
-
 }

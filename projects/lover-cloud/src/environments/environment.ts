@@ -4,12 +4,13 @@
 
 export const environment = {
   production: false,
-  apiHostUrl: 'http://localhost:3089/',
+  apiHostUrl: 'http://192.168.0.124:3089/',
+  anniversaryEndPoint: 'api/lovers/anniversaries',
   registerEndPoint: 'api/users',
   loverLogsEndPoint: 'api/lovers/logs',
   userEndPoint: 'api/users',
   authentication: {
-    hostUrl: 'http://localhost:3088/',
+    hostUrl: 'http://192.168.0.124:3088/',
     tokenEndPoint: 'connect/token'
   },
   localStorageTokenKey: 'LC.Cache',

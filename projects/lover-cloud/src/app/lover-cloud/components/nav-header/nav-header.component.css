@@ -1,0 +1,17 @@
+:host {
+    display: block;
+    height: 100%;
+}
+
+#wrapper {
+    /* height: 64px; */
+    height: 100%;
+    width: 100vw;
+    background: var(--color-accent);
+    overflow-y: hidden;
+}
+
+.icon {
+    display: flex;
+    align-items: center;
+}

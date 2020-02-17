@@ -33,8 +33,9 @@ export const authInterceptor = [
   ],
   providers: [
     AuthService,
-    UserService,
     authInterceptor,
+    UserService,
+    // {provide: UserService, useExisting: UserService}
   ],
   bootstrap: [AppComponent]
 })

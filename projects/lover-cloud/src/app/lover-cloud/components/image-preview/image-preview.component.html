@@ -1,0 +1,9 @@
+<div id="content">
+    <div id="imageBox">
+        <img [src]="(imageUrl|authenticationImageUrl|async)"
+             class="rounded d-block mx-auto"
+             alt="image"
+             (load)="onImageLoaded($event)">
+    </div>
+</div>
+<p class="text-right text-light m-0 p-0 w-100 mt-1 pr-2">图片尺寸: {{ imgHeight }} x {{ imgWidth }}</p>

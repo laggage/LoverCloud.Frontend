@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NzSpinModule, NZ_ICONS, NzIconModule, NzAlertModule, NzMessageModule, NzUploadModule, NzAvatarModule, NzAffixModule, NzPageHeaderModule, NzInputModule, NzTimelineModule } from 'ng-zorro-antd';
+import { NzSpinModule, NZ_ICONS, NzIconModule, NzAlertModule, NzMessageModule, NzUploadModule, NzAvatarModule, NzAffixModule, NzPageHeaderModule, NzInputModule, NzTimelineModule, NzModalModule, NzCarouselModule, NzDatePickerModule, NZ_CONFIG, NzConfig } from 'ng-zorro-antd';
 import { IconDefinition } from '@ant-design/icons-angular';
 import * as AllIcons from '@ant-design/icons-angular/icons';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthInterceptor } from '../../app/authentication/services/auth.interceptor';
+import { registerLocaleData } from '@angular/common';
+import en from '@angular/common/locales/zh';
+registerLocaleData(en);
 
 const antDesignIcons = AllIcons as {
   [key: string]: IconDefinition;
@@ -14,9 +14,9 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons)
   .map(key => antDesignIcons[key])
 
 
-  const authInterceptor = [
-    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
-  ]
+const ngZorroConfig: NzConfig = {
+  message: { nzDuration: 8000 },
+};
 
 @NgModule({
   declarations: [],
@@ -33,8 +33,14 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons)
     NzAffixModule,
     NzPageHeaderModule,
     NzInputModule,
-    NzTimelineModule
+    NzTimelineModule,
+    NzModalModule,
+    NzCarouselModule,
+    NzDatePickerModule
   ],
-  providers: [{ provide: NZ_ICONS, useValue: icons }, authInterceptor]
+  providers: [
+    { provide: NZ_ICONS, useValue: icons },
+    { provide: NZ_CONFIG, useValue: ngZorroConfig }
+  ]
 })
 export class AntdModule { }

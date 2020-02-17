@@ -4,6 +4,7 @@ import { UploadFile, NzMessageService } from 'ng-zorro-antd';
 import { LoverLogService } from '../../services/lover-log.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../authentication/services/auth.service';
+import { ImagePreviewService } from '../../services/image-preview.service';
 
 @Component({
   selector: 'app-lover-log-add',
@@ -20,10 +21,22 @@ export class LoverLogAddComponent implements OnInit {
   constructor(
     private loverLogServ: LoverLogService,
     private message: NzMessageService,
-    private router: Router
-  ) { }
+    private router: Router,
+    private imagePreviewServ: ImagePreviewService
+  ) { 
+  }
 
   ngOnInit(): void {
+  }
+
+  previewImage(file: UploadFile) {
+    this.imagePreviewServ.previewImage(file.thumbUrl);
+  }
+
+  removeImage(file: UploadFile) {
+    if(file!=null) {
+      this.files.splice(this.files.indexOf(file), 1);
+    }
   }
 
   onSubmit() {

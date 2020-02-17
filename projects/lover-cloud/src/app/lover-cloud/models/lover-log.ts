@@ -11,3 +11,4 @@ export class LoverLog extends Entity {
     public createrId: string;
     public creater: User;
 }
+

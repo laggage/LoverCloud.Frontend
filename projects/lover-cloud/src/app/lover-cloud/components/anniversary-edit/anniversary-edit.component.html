@@ -1,0 +1,30 @@
+<form (ngSubmit)="onSubmit()" #form="ngForm">
+       <div>
+              <input type="text"
+                     name="name"
+                     placeholder="纪念日名称"
+                     #name="ngModel"
+                     [(ngModel)]="anniversary.name"
+                     required>
+              <p class="m-0 text-danger" [hidden]="name.valid || name.pristine">请输入内容</p>
+       </div>
+
+       <input type="text"
+              name="desc"
+              placeholder="纪念日描述"
+              class="mt-2"
+              [(ngModel)]="anniversary.description">
+       <nz-date-picker name="date"
+                       #date
+                       required
+                       class="mt-2"
+                       naPlaceholder="日期"
+                       [nzSize]="'large'"
+                       [nzStyle]="{width: '100%'}"
+                       [(ngModel)]="anniversary.date"></nz-date-picker>
+
+       <input class="mt-2"
+              type="submit"
+              value="确定"
+              [disabled]="!form.form.valid">
+</form>

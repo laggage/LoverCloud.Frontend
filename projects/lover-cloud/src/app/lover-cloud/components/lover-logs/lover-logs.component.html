@@ -1,3 +1,18 @@
+<ng-template #confirmDeleteContent>
+    <p class="d-flex align-items-center"> <svg t="1581763380993"
+             class="icon"
+             viewBox="0 0 1024 1024"
+             version="1.1"
+             xmlns="http://www.w3.org/2000/svg"
+             p-id="2870"
+             width="32"
+             height="32">
+            <path d="M552.069565 28.93913l463.026087 923.826087c11.130435 22.26087 2.226087 48.973913-20.034782 60.104348-6.678261 2.226087-13.356522 4.452174-20.034783 4.452174H51.2c-24.486957 0-44.521739-20.034783-44.521739-44.521739 0-6.678261 2.226087-13.356522 4.452174-20.034783L474.156522 28.93913C485.286957 6.678261 512-2.226087 534.26087 8.904348c6.678261 4.452174 13.356522 13.356522 17.808695 20.034782zM467.478261 351.721739v356.173913h89.043478v-356.173913h-89.043478z m44.521739 534.26087c37.843478 0 66.782609-28.93913 66.782609-66.782609s-28.93913-66.782609-66.782609-66.782609-66.782609 28.93913-66.782609 66.782609c0 35.617391 28.93913 66.782609 66.782609 66.782609z"
+                  fill="#FFCD00"
+                  p-id="2871"></path>
+        </svg> <span class="ml-3" >确定要删除吗? 删除后数据将无法恢复!</span> </p>
+</ng-template>
+
 <!-- 新建情侣时光按钮 -->
 <nz-affix routerLink="./add"
           class="btn-affix">
@@ -8,8 +23,8 @@
              version="1.1"
              xmlns="http://www.w3.org/2000/svg"
              p-id="1950"
-             width="48"
-             height="48">
+             width="32"
+             height="32">
             <path d="M1024 427.84 596.224 427.84 596.224 0 427.84 0 427.84 427.84 0 427.84 0 596.224 427.84 596.224 427.84 1024 596.224 1024 596.224 596.224 1024 596.224Z"
                   p-id="1951"
                   fill="#e6e6e6"></path>
@@ -42,18 +57,21 @@
     <div id="header">
         <div id="header-content">
             <app-lover-profile-image></app-lover-profile-image>
-            <span class="text-bolder">我们在一起 <br /> <span style="font-size: 2rem;">100 </span> 天 </span>
+            <span class="text-bolder">我们在一起 <br /> 
+                <span class="font-weight-bolder text-large"> {{ totalLoveDay }} </span> 天 </span>
         </div>
     </div>
 
     <div id="content">
         <div>
-            <ng-template #pending >
+            <ng-template #pending>
                 <div *ngIf="paginationData.hasNext">
-                    <button href="." (click)="getLoverLog()">加载更多</button>
+                    <button class="btn p-0"
+                            (click)="getLoverLog()">加载更多</button>
                 </div>
             </ng-template>
-            <nz-timeline [nzPending]="pending" [nzPendingDot]="iconPending">
+            <nz-timeline [nzPending]="paginationData.hasNext?pending:null"
+                         [nzPendingDot]="iconPending">
                 <ng-template #iconBoy>
                     <svg t="1581685658952"
                          class="icon"
@@ -112,21 +130,45 @@
                 </ng-template>
                 <nz-timeline-item *ngFor="let log of loverLogs"
                                   [nzDot]="getTimeLineIcon(log)">
+
                     <div class="px-2 rounded py-1"
                          [class.bg-light-gray]="!log.loverPhotos || log.loverPhotos.length === 0">
                         <div>
                             {{log.content}}
                         </div>
-                        <div *ngFor="let img of log.loverPhotos">
-                            <img *ngIf="img && img.url"
-                                 class=" rounded"
-                                 [src]="img && img.url ? (img.url|authenticationImageUrl|async): ''"
-                                 style="height: 60px; width: 64px;"
-                                 alt="说说图片">
+                        <div class="d-flex w-100 flex-row flex-wrap justify-cotent-between">
+                            <div class="overflow-hidden mr-2 mt-2"
+                                 style="width: 102px; height: 102px;"
+                                 *ngFor="let img of log.loverPhotos">
+                                <img *ngIf="img && img.url"
+                                     class="rounded img-clipable"
+                                     (click)="previewImage([img])"
+                                     [src]="img && img.url ? (img.url|authenticationImageUrl|async): ''"
+                                     alt="说说图片">
+                            </div>
                         </div>
+
                     </div>
-                    <div class="px-2">
-                        {{ log.createDateTime|date }}
+                    <div class="px-2 d-flex w-100 mt-1 flex-row justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <a class="">
+                                <span>评论</span>
+                            </a>
+                            <a class="ml-2 d-flex "
+                               (click)="showConfimDeleteModal(log)">
+                                <span *ngIf="log.status !== 'deleting'">删除</span>
+                                <ng-template #indicatorTemplate><i nz-icon
+                                       nzType="loading"
+                                       style="font-size: 16px; color: var(--color-accent-base);"></i> </ng-template>
+                                <nz-spin *ngIf="log.status === 'deleting'"
+                                         class="ml-2"
+                                         nzSimple
+                                         [nzIndicator]="indicatorTemplate"></nz-spin>
+                            </a>
+                        </div>
+                        <div>
+                            {{ log.createDateTime|date:'yyyy-MM-dd HH:mm:ss' }}
+                        </div>
                     </div>
                 </nz-timeline-item>
             </nz-timeline>

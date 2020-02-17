@@ -114,7 +114,7 @@ export class AuthService {
    * @param response http响应
    * @param router 路由器
    */
-  public static toAuthPageIfUnauthorized(response: HttpResponseBase, router: Router) {
+  public static toAuthPageIfUnauthorized(response: HttpResponseBase|HttpErrorResponse|HttpResponse<Object>, router: Router) {
     if(!response || this.isUnauthorizedResponse(response)) {
       this.deleteToken();
       router.navigateByUrl('auth/login');
