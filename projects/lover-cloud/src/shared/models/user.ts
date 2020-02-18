@@ -28,4 +28,10 @@ export class User {
         let data = await this.imgServ.getAuthImage(this.profileImageUrl).toPromise();
         return data;
     }
+
+    public get totalAnniversaryCount() {
+        let array = [this.lover.loveDay, this.lover.weddingDay, this.birth, this.spouse.birth];
+        let extraAnniversaryCount = array.filter(x => x).length;
+        return this.loverAnniversaryCount + extraAnniversaryCount;
+    }
 }

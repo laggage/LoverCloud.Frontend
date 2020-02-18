@@ -8,15 +8,18 @@ import { Observable } from 'rxjs';
 import { NzMessageService } from 'ng-zorro-antd';
 import { QueryParameters } from 'projects/lover-cloud/src/shared/models/query-parameters';
 import { ResultWithLinks } from 'projects/lover-cloud/src/shared/models/result-with-links';
+import { BaseService } from 'projects/lover-cloud/src/shared/services/base.service';
 
 @Injectable()
-export class LoverLogService {
+export class LoverLogService extends BaseService {
 
   private url: string = `${environment.apiHostUrl}${environment.loverLogsEndPoint}`
 
   constructor(
     private http: HttpClient,
-    private message: NzMessageService) { }
+    private message: NzMessageService) {
+      super();
+     }
 
 
   public get(parameters: QueryParameters) {
@@ -35,9 +38,7 @@ export class LoverLogService {
         });
         return o;
       }),
-      catchError((error) => {
-        return new Observable<HttpErrorResponse>(s => s.next(error));
-      })
+      catchError(this.handleError)
     );
   }
 
@@ -46,10 +47,7 @@ export class LoverLogService {
       observe: 'response'
     }).pipe(
       retry(2),
-      catchError((error) => {
-        this.message.error('请求失败');
-        return new Observable<HttpErrorResponse>(s => s.next(error));
-      })
+      catchError(this.handleError)
     );
   }
 
@@ -65,10 +63,7 @@ export class LoverLogService {
     })
       .pipe(
         retry(3),
-        catchError((error: HttpErrorResponse) => {
-          this.message.error('创建情侣日志失败.');
-          return new Observable<HttpErrorResponse>(s => { s.next(error); s.complete() });
-        }),
+        catchError(this.handleError),
       )
   }
 }

@@ -15,12 +15,12 @@
               class="mt-2"
               [(ngModel)]="anniversary.description">
        <nz-date-picker name="date"
-                       #date
+                       #date 
                        required
-                       class="mt-2"
+                       class="mt-2" readonly="readonly"
                        naPlaceholder="日期"
                        [nzSize]="'large'"
-                       [nzStyle]="{width: '100%'}"
+                       [nzAutoFocus]="false"
                        [(ngModel)]="anniversary.date"></nz-date-picker>
 
        <input class="mt-2"

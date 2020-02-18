@@ -125,3 +125,22 @@
 .anniversay-item .date-bg-special {
     background: #fe8f7c;
 }
+
+.days-tag {
+    border-radius: 0 50% 50% 0;
+    background-color: #fc3c38;
+    font-size: 12px;
+    color: white;
+    font-weight: bolder;
+    padding: .1rem .3rem .1rem .1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: .6rem;
+   
+}
+
+.days-tag>span {
+    text-align: center;
+    vertical-align: middle;
+}

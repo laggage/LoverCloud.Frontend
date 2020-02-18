@@ -33,6 +33,8 @@ svg {
     --color-gray8: #E0E0E0FF;
     --color-gray9: #C9C9C95E;
     --color-gray10: #F7F7F7FF;
+
+    --color-black-mask: rgba(0,0,0,0.7);
 }
 
 .text-accent {
@@ -140,6 +142,15 @@ button:focus,
 .btn:focus {
     box-shadow: none;
 }
+
+.btn-icon {
+    /* color: var(--color-white); */
+    transition: .2s ease-in-out color;
+}
+.btn-icon:hover {
+    color: var(--color-accent) !important;
+}
+
 
 .profile-img {
     width: 100%;

@@ -26,6 +26,7 @@
     background-image: url("../../../../assets/2.svg");
     background-repeat: no-repeat;
     background-size:  100%;
+    position: relative;
 }
 
 .above img {
@@ -52,10 +53,10 @@
 }
 
 #btn-card-container {
-    margin-top: 42px; /* 去除头像高度 */
-    position: absolute;
+    /* 去除头像高度 */
+    margin-top: -32px;
     top: 0;
-    height: 100%;
+    /* height: 100%; */
     display: flex;
     flex-direction: row;
     align-items: center;

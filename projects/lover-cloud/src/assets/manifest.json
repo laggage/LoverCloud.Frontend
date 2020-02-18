@@ -1,0 +1,55 @@
+{
+    "short_name": "LoverCloud",
+    "name": "情侣云",
+    "theme_color": "#F472D0",
+    "icons": [
+      {
+        "src": "lancherRect.png",
+        "sizes": "16x16",
+        "type": "image/png"
+      },
+      {
+        "src": "lancherRect.png",
+        "sizes": "32x32",
+        "type": "image/png"
+      },
+      {
+        "src": "lancherRect.png",
+        "sizes": "48x48",
+        "type": "image/png"
+      },
+      {
+        "src": "lancherRect.png",
+        "sizes": "64x64",
+        "type": "image/png"
+      },
+      {
+        "src": "lancherRect.png",
+        "sizes": "90x90",
+        "type": "image/png"
+      },
+      {
+        "src": "lancherRect.png",
+        "sizes": "128x128",
+        "type": "image/png"
+      },
+      {
+        "src": "lancherRect.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      }
+    ],
+    "developer": {
+        "name": "laggage",
+        "url": "https://www.laggage.top:4201/"
+      },
+    "start_url": "/auth",
+    "display": "standalone",
+    "fullscreen": "true",
+    "orientation": "standalone",
+    "permissions": {
+      "desktop-notification": {
+        "description": "Needed for creating system notifications."
+      }
+    }
+  }

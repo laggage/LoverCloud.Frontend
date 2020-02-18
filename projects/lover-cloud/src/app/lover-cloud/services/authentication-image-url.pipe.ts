@@ -14,8 +14,6 @@ export class AuthenticationImageUrlPipe implements PipeTransform {
   transform(value: string) {
     let reg: RegExp = /^https?:\/\//
     if (!reg.test(value)) {
-      // value.re
-      // console.log(value);
       return new Promise<string>((resolve, reject) => resolve(value));
     }
 

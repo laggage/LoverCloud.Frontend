@@ -34,25 +34,7 @@
 
 <div id="wrapper">
     <div id="top-nav">
-        <ng-template #backIcon>
-            <svg t="1581656190833"
-                 class="icon"
-                 viewBox="0 0 1024 1024"
-                 version="1.1"
-                 xmlns="http://www.w3.org/2000/svg"
-                 p-id="2733"
-                 width="24"
-                 height="24">
-                <path d="M178 544l356 329-44 46L49 512l441-407 44 46-356 329h782v64H178z"
-                      p-id="2734"
-                      fill="#e6e6e6"></path>
-            </svg>
-        </ng-template>
-        <nz-page-header [nzBackIcon]="backIcon"
-                        class="page-header text-light  text-center"
-                        [nzGhost]="true">
-            <nz-page-header-title class="d-flex m-auto align-items-center text-white">时光记录</nz-page-header-title>
-        </nz-page-header>
+        <app-nav-header backUrl="/lover" title="时光记录"></app-nav-header>
     </div>
     <div id="header">
         <div id="header-content">

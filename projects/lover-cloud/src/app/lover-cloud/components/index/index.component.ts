@@ -29,8 +29,8 @@ export class IndexComponent implements OnInit {
   }
 
   private loadUser(refresh: boolean = false) {
-    this.userServ.getUser(refresh).subscribe(async s => {
-      if(s instanceof User) {
+    this.userServ.getUser(refresh).subscribe(s => {
+      if (s instanceof User) {
         this.user = s;
         this.loadTotalLoveDay();
       } else {
@@ -45,6 +45,7 @@ export class IndexComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    window.scrollTo(0, 1);
   }
 
   setLoveDay() {
@@ -72,7 +73,8 @@ export class IndexComponent implements OnInit {
         },
         loading: uploading
       }],
-      nzComponentParams: {'date': this.user.lover.loveDay.date}
+      nzComponentParams: {'date': this.user.lover.loveDay.date},
+      nzClosable: false
     });
  
     modal.afterClose.subscribe(() => {

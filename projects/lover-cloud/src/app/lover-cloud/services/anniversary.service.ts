@@ -6,22 +6,25 @@ import { retry, catchError, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { JsonPatchDocment } from 'projects/lover-cloud/src/shared/models/json-patch-document';
 import { ResultWithLinks } from 'projects/lover-cloud/src/shared/models/result-with-links';
+import { BaseService } from 'projects/lover-cloud/src/shared/services/base.service';
 
 @Injectable()
-export class AnniversaryService {
+export class AnniversaryService extends BaseService {
 
   public url: string = `${environment.apiHostUrl}${environment.anniversaryEndPoint}`;
 
   constructor(
     private http: HttpClient
-  ) { }
+  ) { 
+    super();
+  }
 
   public getById(id: string) {
     return this.http.get<Anniversary>(`${this.url}/${id}`, {
       observe: 'response'
     }).pipe(
       retry(2),
-      catchError(err => new Observable<HttpErrorResponse>(err))
+      catchError(this.handleError)
     );
   }
 
@@ -34,25 +37,30 @@ export class AnniversaryService {
         x.body.value = x.body.value.map(a => Object.assign(new Anniversary(), a));
         return x;
       }),
-      catchError(err => new Observable<HttpErrorResponse>(err))
+      catchError(this.handleError)
     );
   }
 
   public patch(anniversary: Anniversary) {
     let doc = new JsonPatchDocment();
-    for(let key in anniversary) { 
-      doc.opeartions.push({
-        op: 'replace',
-        value: anniversary[key],
-        path: `/${key}`
-      });
-    }
-
-    return this.http.patch(this.url, doc.opeartions, {
+    doc.opeartions.push({
+      op: 'replace',
+      path: '/date',
+      value: anniversary.date
+    }, {
+      op: 'replace',
+      path: '/name',
+      value: anniversary.name
+    },{
+      op: 'replace',
+      path: '/description',
+      value: anniversary.description
+    })
+    return this.http.patch(`${this.url}/${anniversary.id}`, doc.opeartions, {
       observe: 'response'
     }).pipe(
       retry(2),
-      catchError(err => new Observable<HttpErrorResponse>(err))
+      catchError(this.handleError)
     );
   }
 
@@ -73,7 +81,8 @@ export class AnniversaryService {
       observe: 'response'
     }).pipe(
       retry(2),
-      catchError(err => new Observable<HttpErrorResponse>(err))
+      catchError(err => new Observable<HttpErrorResponse>(s => {s.next(err); s.complete()}))
     )
   }
+
 }

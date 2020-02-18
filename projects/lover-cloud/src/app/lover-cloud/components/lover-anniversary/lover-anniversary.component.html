@@ -19,9 +19,23 @@
 </div>
 
 <div id="content">
-    <div class="anniversay-item" *ngFor="let anniversary of anniversaries; let i = index">
+
+    <div class="my-3 py-3 px-3 d-flex justify-content-between border-bottom border-top" *ngIf="selectedAnniversary">
+        <div class="d-flex flex-column align-items-center justify-content-center">
+            <div class="font-weight-bolder text-large">{{selectedAnniversary.name}}</div>
+            <div class="text-muted mt-2">起始日: &nbsp;{{selectedAnniversary.date|date:'yyyy-M-d EEEE'}}</div>
+        </div>
+        <div class="d-flex align-items-start">
+             <h1 class="m-0">{{selectedAnniversary.timeSpan.day}}</h1> 
+             <div class="days-tag"><span>Days</span> </div>
+        </div>
+    </div>
+
+    <div class="anniversay-item"
+         *ngFor="let anniversary of anniversaries; let i = index">
         <div class="content">
-            <div class="date" [class.date-bg-special]="i === anniversaries.length - 1">
+            <div class="date"
+                 [class.date-bg-special]="i === anniversaries.length - 1">
                 <span class="text-large">{{anniversary.date|date:'d'}}</span>
                 <span>{{anniversary.date|date:'yyyy M'}}</span>
             </div>
@@ -33,13 +47,24 @@
                 <span class="text-large">{{anniversary.timeSpan.day}}</span> 天
             </div>
         </div>
-        <div *ngIf="anniversary.isLoading" class="mask mask-loading">
-            <ng-template #indicatorTemplate><i nz-icon nzType="loading" style="font-size: 24px; color: var(--color-accent);"></i> </ng-template>
-            <nz-spin nzSimple [nzIndicator]="indicatorTemplate"></nz-spin>
+        <div *ngIf="anniversary.isLoading"
+             class="mask mask-loading">
+            <ng-template #indicatorTemplate><i nz-icon
+                   nzType="loading"
+                   style="font-size: 24px; color: var(--color-accent);"></i> </ng-template>
+            <nz-spin nzSimple
+                     [nzIndicator]="indicatorTemplate"></nz-spin>
         </div>
-        <div *ngIf="!anniversary.isLoading" class="mask mask-operation">
-            <span (click)="deleteAnniversary(anniversary)" class="btn-icon"><i nz-icon nzType="delete" nzTheme="outline"></i></span>
-            <span class="btn-icon"><i nz-icon nzType="edit" nzTheme="outline"></i></span>
+        <div *ngIf="!anniversary.isLoading"
+             class="mask mask-operation">
+            <span (click)="deleteAnniversary(anniversary)"
+                  class="btn-icon"><i nz-icon
+                   nzType="delete"
+                   nzTheme="outline"></i></span>
+            <span (click)="editAnniversary(anniversary)"
+                  class="btn-icon"><i nz-icon
+                   nzType="edit"
+                   nzTheme="outline"></i></span>
         </div>
     </div>
 </div>

@@ -7,9 +7,10 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'projects/lover-cloud/src/environments/environment';
 import { catchError, retry } from 'rxjs/operators';
 import { ImageService } from '../../lover-cloud/services/image.service';
+import { BaseService } from 'projects/lover-cloud/src/shared/services/base.service';
 
 @Injectable()
-export class UserService {
+export class UserService extends BaseService {
   private user: User;
   private url: string = `${environment.apiHostUrl}${environment.userEndPoint}`
 
@@ -17,7 +18,9 @@ export class UserService {
     private authServ: AuthService,
     private http: HttpClient,
     private imgServ: ImageService
-  ) { }
+  ) { 
+    super();
+  }
 
   public setLoveDay(date: Date) {
     return this.patchUser({
@@ -37,7 +40,7 @@ export class UserService {
       observe: 'response'
     }).pipe(
       retry(2),
-      catchError(err => new Observable<HttpErrorResponse>(err))
+      catchError(this.handleError)
     );
   }
 
@@ -52,9 +55,7 @@ export class UserService {
           observe: 'response'
         }).pipe(
           retry(2),
-          catchError((error: HttpErrorResponse) => {
-            return new Observable<HttpErrorResponse>(s => s.next(error));
-          })
+          catchError(this.handleError)
         ).subscribe(u => {
           if (u.ok && u.status === 200) {
             this.user = Object.assign(new User(this.imgServ), u.body);
@@ -63,10 +64,11 @@ export class UserService {
           s.complete();
         });
       } else {
-        s.next(Object.assign(new User(this.imgServ), this.user));
+        s.next(this.user);
         s.complete();
       }
-      // s.complete();
     });
   }
+
+  
 }

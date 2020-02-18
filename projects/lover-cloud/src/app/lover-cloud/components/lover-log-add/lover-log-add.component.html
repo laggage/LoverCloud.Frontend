@@ -1,36 +1,15 @@
 <div id="wrapper-header">
-    <ng-template #backIcon>
-        <div class="d-flex align-items-center">
-            <svg t="1581656190833"
-                 class="icon"
-                 viewBox="0 0 1024 1024"
-                 version="1.1"
-                 xmlns="http://www.w3.org/2000/svg"
-                 p-id="2733"
-                 width="24"
-                 height="24">
-                <path d="M178 544l356 329-44 46L49 512l441-407 44 46-356 329h782v64H178z"
-                      p-id="2734"
-                      fill="#e6e6e6"></path>
-            </svg>
-        </div>
+    <ng-template #extra>
+        <h5 (click)="onSubmit()" class="m-0 text-white font-weight-bolder">完成</h5>
     </ng-template>
-    <nz-page-header [nzBackIcon]="backIcon"
-                    [nzGhost]="true">
-        <nz-page-header-title class="w-auto text-nowrap text-light">
-            发布时光
-        </nz-page-header-title>
-        <nz-page-header-extra class="w-100 py-0 d-flex justify-content-end">
-            <h5 (click)="onSubmit()"
-                class="p-2 m-0 text-light font-weight-bolder">完成</h5>
-        </nz-page-header-extra>
-    </nz-page-header>
+    <app-nav-header [backUrl]="'/lover/log'" [title]="title" [extraContent]="extra"></app-nav-header>
 </div>
 
-<div class="content mt-3">
-    <form [formGroup]="loverLogForm"
+<div id="content">
+    <form id="form" [formGroup]="loverLogForm"
           class="w-100 px-3">
-        <textarea formControlName="content"
+        <textarea id="input-text" 
+                  formControlName="content"
                   class="w-100"
                   rows="8"
                   nz-input
@@ -38,14 +17,15 @@
                   type="text"
                   [nzAutosize]="false"
                   style="resize: none;">
-
         </textarea>
-        <div class="d-flex align-items-start mt-3 flex-wrap justify-content-between">
+        <div id="image-list" class="d-flex align-items-start mt-3 flex-wrap justify-content-between">
             <nz-upload class="w-auto m-0"
                        nzListType="picture-card"
                        [nzFileType]="'image/png,image/jpeg,image/jpg,image/gif,image/bmp'"
                        [(nzFileList)]="files"
-                       [nzShowUploadList]="false">
+                       [nzBeforeUpload]="false"
+                       [nzShowUploadList]="false"
+                       [nzMultiple]="true">
                 <ng-container>
                     <svg t="1581661305198"
                          class="icon"
@@ -68,7 +48,7 @@
                     <!-- <div class="ant-upload-text">Upload</div> -->
                 </ng-container>
             </nz-upload>
-            <div class="upload-img-list-item mr-2 mb-2 border rounded p-2"
+            <div class="upload-img-list-item mr-2 mb-2 border rounded p-2" 
                  *ngFor="let file of files">
                  <div class="img-preview w-100 h-100">
                     <img class="w-100 h-100 img-clipable rounded"
@@ -103,14 +83,13 @@
                         </svg>
                     </div>
                  </div>
-                
             </div>
             <div class="upload-img-list mr-2 mb-2"
-                 style="visibility: hidden;">
+                 style="visibility: hidden; width: 104px; ">
             </div>
-            <div class="upload-img-list mr-2 mb-2"
+            <!-- <div class="upload-img-list mr-2 mb-2"
                  style="visibility: hidden;">
-            </div>
+            </div> -->
         </div>
     </form>
 </div>

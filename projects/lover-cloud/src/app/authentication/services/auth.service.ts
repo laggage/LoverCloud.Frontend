@@ -8,9 +8,10 @@ import { catchError, retry } from 'rxjs/operators';
 import { UserLoginMetadata } from 'projects/lover-cloud/src/shared/models/user-login-metadata';
 import { Token } from 'projects/lover-cloud/src/shared/models/token';
 import { Router } from '@angular/router';
+import { BaseService } from 'projects/lover-cloud/src/shared/services/base.service';
 
 @Injectable()
-export class AuthService {
+export class AuthService extends BaseService {
 
   private registerUrl: string = `${environment.apiHostUrl}${environment.registerEndPoint}`;
   private registerHeaders: HttpHeaders = new HttpHeaders({
@@ -24,7 +25,9 @@ export class AuthService {
 
   constructor(
     private http: HttpClient
-  ) { }
+  ) { 
+    super();
+  }
 
   /**
    * 用户注册
@@ -40,9 +43,7 @@ export class AuthService {
       observe: 'response'
     }).pipe(
       retry(3),
-      catchError((error: HttpErrorResponse) => {
-        return new Observable<HttpErrorResponse>(s => s.next(error));
-      })
+      catchError(this.handleError)
     );
   }
 
@@ -62,9 +63,7 @@ export class AuthService {
         observe: 'response'
       }).pipe(
         retry(3),
-        catchError((error: HttpErrorResponse) => {
-          return new Observable<HttpErrorResponse>(s => s.next(error))
-        })).subscribe(response => {
+        catchError(this.handleError)).subscribe(response => {
           if (response.ok) {
             let token: Token = Object.assign(new Token(), response.body);
             this.saveToken(token);

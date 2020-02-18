@@ -1,15 +1,29 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-cn">
+
 <head>
   <meta charset="utf-8">
   <title>LoverCloud</title>
   <base href="/">
   <!-- <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1"> -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=0" />
+  <!--仅Android支持-->
+  <meta name="mobile-web-app-capable"
+        content="yes">
+  <!--ios和Android都支持-->
+  <meta name="apple-mobile-web-app-capable"
+        content="yes">
+  <link rel="manifest"
+        href="assets/manifest.json">
   <!-- <meta name="x5-fullscreen" content="true"/> -->
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon"
+        type="image/x-icon"
+        href="favicon.ico">
 </head>
+
 <body>
   <app-root></app-root>
 </body>
+
 </html>

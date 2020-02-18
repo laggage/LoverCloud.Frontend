@@ -1,28 +1,47 @@
 :host {
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     background: white;
-    position: absolute;
+    position: fixed;
+    display: block;
 }
 
 #wrapper-header {
     background: var(--color-accent-base);
+    height: 10vh;
+}
+
+#content {
+    height: 90vh;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    overflow-y: auto;
+}
+
+#form {
+    /* height: 100%; */
+    height: 100%;
+    overflow: hidden;
+}
+
+#input-text {   
+    height: 30%;
+}
+
+#image-list {
+    overflow-y: auto;
+    max-height: 70%;
 }
 
 .upload-img-list-item {
     width: 104px;
     height: 104px;
     overflow: hidden;
-    
 }
 
 .upload-img-list-item .img-preview {
     position: relative;
 }
-
-/* .upload-img-list-item .img-preview:hover {
-    opacity: 0.6;
-} */
 
 .img-preview-mask {
     background: rgba(0, 0, 0, 0.6);

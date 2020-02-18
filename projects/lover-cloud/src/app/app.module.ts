@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserService } from './authentication/services/user.service';
 import { AuthInterceptor } from './authentication/services/auth.interceptor';
+import { BaseService } from '../shared/services/base.service';
 
 
 export const authInterceptor = [
@@ -34,6 +35,7 @@ export const authInterceptor = [
   providers: [
     AuthService,
     authInterceptor,
+    BaseService,
     UserService,
     // {provide: UserService, useExisting: UserService}
   ],

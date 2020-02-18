@@ -31,8 +31,9 @@ export class ImageService {
           s.next(response);
           s.complete();
         }
-      })
-    })
+      }) // subscribe
+    });
+    
   }
 
 }

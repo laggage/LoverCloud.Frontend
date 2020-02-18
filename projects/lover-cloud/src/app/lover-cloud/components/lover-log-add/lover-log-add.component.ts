@@ -12,6 +12,7 @@ import { ImagePreviewService } from '../../services/image-preview.service';
   styleUrls: ['./lover-log-add.component.css']
 })
 export class LoverLogAddComponent implements OnInit {
+  public title: string = '发布时光';
   public loverLogForm: FormGroup = new FormGroup({
     content: new FormControl(''),
   });
@@ -35,7 +36,7 @@ export class LoverLogAddComponent implements OnInit {
 
   removeImage(file: UploadFile) {
     if(file!=null) {
-      this.files.splice(this.files.indexOf(file), 1);
+      this.files.splice(this.files.indexOf(file), 1)[0].thumbUrl = null;
     }
   }
 
