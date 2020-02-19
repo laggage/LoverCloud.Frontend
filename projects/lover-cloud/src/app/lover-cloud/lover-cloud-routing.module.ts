@@ -8,6 +8,8 @@ import { LoverLogsComponent } from './components/lover-logs/lover-logs.component
 import { LoverLogAddComponent } from './components/lover-log-add/lover-log-add.component';
 import { ImagePreviewService } from './services/image-preview.service';
 import { LoverAnniversaryComponent } from './components/lover-anniversary/lover-anniversary.component';
+import { ImagesComponent } from './components/images/images.component';
+import { ImageUploadComponent } from './components/image-upload/image-upload.component';
 
 const routes: Routes = [
   // { path: 'lover', component: LoverCloudComponent, pathMatch: 'full'},
@@ -19,7 +21,9 @@ const routes: Routes = [
       { path: 'chat', component: ChatComponent },
       { path: 'log', component: LoverLogsComponent },
       { path: 'log/add', component: LoverLogAddComponent },
-      { path: 'anniversary', component: LoverAnniversaryComponent }
+      { path: 'anniversary', component: LoverAnniversaryComponent },
+      { path: 'images', component: ImagesComponent },
+      { path: 'images/upload', component: ImageUploadComponent }
     ]
   },
 ];

@@ -6,15 +6,33 @@ import { AlbumService } from '../../services/album.service';
 import { HttpResponse } from '@angular/common/http';
 import { AuthService } from '../../../authentication/services/auth.service';
 import { Router } from '@angular/router';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-album',
   templateUrl: './album.component.html',
-  styleUrls: ['./album.component.css']
+  styleUrls: ['./album.component.css'],
+  animations: [
+    trigger('isClicked',[
+      state('normal', style({
+        transform: 'scale(1,1)'
+      })),
+      state('clicked', style({
+        transform: 'scale(.9,.9)'
+      })),
+      transition('normal => clicked', [
+        animate('0.1s ease-in-out')
+      ]),
+      transition('clicked => normal', [
+        animate('0.1s ease-in-out')
+      ]),
+    ])
+  ]
 })
 export class AlbumComponent implements OnInit {
   title: string = '我们的相册';
   albums: Albums = [];
+  isClicked: boolean = false;
 
   constructor(
     private modalServ: NzModalService,
@@ -115,5 +133,18 @@ export class AlbumComponent implements OnInit {
         this.messageServ.error('新建相册失败');
       }
     })
+  }
+
+  /**
+   * 相册被点击回调
+   * @param album 被点击的相册
+   */
+  onAlbumCardClicked(album: Album) {
+    album.status = 'clicked';
+    // 100ms后动画完成, 回调进行路由
+    setTimeout(() => {
+      album.status = 'none';
+      this.router.navigate(['lover/images'], {queryParams: album});
+    }, 100)
   }
 }

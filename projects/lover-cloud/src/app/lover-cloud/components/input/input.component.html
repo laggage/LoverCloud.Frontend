@@ -1,0 +1,5 @@
+<form (submit)="onSubmit()">
+    <input type="text" name="value" *ngIf="!multiline" [(ngModel)]="value">
+    <textarea *ngIf="multiline" rows="5" name="value-multiline" [(ngModel)]="value"></textarea>
+    <button class="mt-2 app-button" >确定</button>
+</form>

@@ -24,16 +24,18 @@ import { NavHeaderComponent } from './components/nav-header/nav-header.component
 import { AlbumEditComponent } from './components/album-edit/album-edit.component';
 import { AlbumService } from './services/album.service';
 import { ImageUploadComponent } from './components/image-upload/image-upload.component';
+import { ImagesComponent } from './components/images/images.component';
+import { InputComponent } from './components/input/input.component';
 
 
 @NgModule({
-  declarations: [LoverCloudComponent, IndexComponent, AlbumComponent, ChatComponent, LoverLogsComponent, LoverLogAddComponent, LoverProfileImageComponent, AuthenticationImageUrlPipe, ImagePreviewComponent, LoverAnniversaryComponent, DatePickComponent, AnniversaryEditComponent, NavHeaderComponent, AlbumEditComponent, ImageUploadComponent],
+  declarations: [LoverCloudComponent, IndexComponent, AlbumComponent, ChatComponent, LoverLogsComponent, LoverLogAddComponent, LoverProfileImageComponent, AuthenticationImageUrlPipe, ImagePreviewComponent, LoverAnniversaryComponent, DatePickComponent, AnniversaryEditComponent, NavHeaderComponent, AlbumEditComponent, ImageUploadComponent, ImagesComponent, InputComponent],
   imports: [
     CommonModule,
     LoverCloudRoutingModule,
     AntdModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
   ],
   bootstrap: [LoverCloudComponent],
   providers: [

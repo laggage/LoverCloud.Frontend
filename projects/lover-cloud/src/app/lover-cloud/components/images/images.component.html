@@ -1,0 +1,24 @@
+<div class="header">
+    <ng-template #extra>
+        <i nz-icon
+           class="text-white"
+           (click)="navigateToUploadImage()">
+            <svg t="1582093327807"
+                 class="icon"
+                 viewBox="0 0 1024 1024"
+                 version="1.1"
+                 xmlns="http://www.w3.org/2000/svg"
+                 p-id="5736"
+                 width="32"
+                 height="32">
+                <path d="M662.63 545.37l-128-128a32 32 0 0 0-45.25 0l-128 128a32 32 0 1 0 45.25 45.25L480 517.25V872a32 32 0 0 0 64 0V517.25l73.37 73.37a32 32 0 1 0 45.25-45.25z"
+                      p-id="5737"></path>
+                <path d="M752 760H640a32 32 0 0 1 0-64h112c79.4 0 144-64.6 144-144a144 144 0 0 0-132.45-143.54 32 32 0 0 1-29.24-28C720.6 268.46 625 184 512 184s-208.6 84.46-222.31 196.45a32 32 0 0 1-29.24 28A144 144 0 0 0 128 552c0 79.4 64.6 144 144 144h112a32 32 0 0 1 0 64H272c-114.69 0-208-93.31-208-208a208.08 208.08 0 0 1 166.23-203.79C258 216.5 375 120 512 120s254 96.5 281.77 228.21A208.08 208.08 0 0 1 960 552c0 114.69-93.31 208-208 208z"
+                      p-id="5738"></path>
+            </svg>
+        </i>
+    </ng-template>
+    <app-nav-header backUrl="/lover/album"
+                    [title]="'相册: '+album.name"
+                    [extraContent]="extra"></app-nav-header>
+</div>

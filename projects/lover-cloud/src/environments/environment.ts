@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   apiHostUrl: 'http://192.168.0.124:3089/',
+  imageEndpoint: 'api/lovers/photos',
   anniversaryEndPoint: 'api/lovers/anniversaries',
   albumEndpoint: 'api/lovers/albums',
   registerEndPoint: 'api/users',

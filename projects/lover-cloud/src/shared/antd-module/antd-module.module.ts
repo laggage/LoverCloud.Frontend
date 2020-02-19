@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NzSpinModule, NZ_ICONS, NzIconModule, NzAlertModule, NzMessageModule, NzUploadModule, NzAvatarModule, NzAffixModule, NzPageHeaderModule, NzInputModule, NzTimelineModule, NzModalModule, NzCarouselModule, NzDatePickerModule, NZ_CONFIG, NzConfig } from 'ng-zorro-antd';
+import { NzSpinModule, NZ_ICONS, NzIconModule, NzAlertModule, NzMessageModule, NzUploadModule, NzAvatarModule, NzAffixModule, NzPageHeaderModule, NzInputModule, NzTimelineModule, NzModalModule, NzCarouselModule, NzDatePickerModule, NZ_CONFIG, NzConfig, NzDropDownModule } from 'ng-zorro-antd';
 import { IconDefinition } from '@ant-design/icons-angular';
 import * as AllIcons from '@ant-design/icons-angular/icons';
 import { registerLocaleData } from '@angular/common';
@@ -36,7 +36,8 @@ const ngZorroConfig: NzConfig = {
     NzTimelineModule,
     NzModalModule,
     NzCarouselModule,
-    NzDatePickerModule
+    NzDatePickerModule,
+    NzDropDownModule
   ],
   providers: [
     { provide: NZ_ICONS, useValue: icons },

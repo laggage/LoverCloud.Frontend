@@ -4,4 +4,40 @@
     width: 100vw;
     height: 100vh;
     background: var(--color-white);
+    overflow: hidden;
+}
+
+#content {
+    overflow: auto;
+    height: 90vh;
+}
+
+.upload-item {
+    width: 100%;
+}
+
+.upload-item {
+    margin-bottom: .8rem;
+}
+
+.upload-item>div {
+    background: var(--color-gray9);
+    position: relative;
+    height: 92px;
+    max-height: 92px;
+    overflow: hidden;
+}
+
+.upload-item .img {
+    height: 92px;
+    width: 92px;
+    z-index: 50;
+    min-width: 92px;
+    min-height: 92px;
+}
+
+.close-icon {
+    position: absolute;
+    right: 0.5rem;
+    top: 0.2rem;
 }

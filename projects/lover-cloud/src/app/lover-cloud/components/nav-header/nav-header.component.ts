@@ -16,7 +16,6 @@ export class NavHeaderComponent implements OnInit {
   constructor(
     private router: Router
   ) {
-    // this.router.navigateByUrl(this.backUrl);
   }
 
   ngOnInit(): void {
@@ -27,6 +26,10 @@ export class NavHeaderComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigateByUrl(this.backUrl);
+    if(!this.backUrl) {
+      window.history.back();
+    } else {
+      this.router.navigateByUrl(this.backUrl);
+    }
   }
 }

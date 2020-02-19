@@ -57,6 +57,18 @@ html, body {
     box-sizing: border-box;
 }
 
+.bg-mask {
+    background: var(--color-black-mask);
+}
+
+.btn-disabled {
+    pointer-events: none;
+    opacity: 0.6;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+textarea,
 input[type=text], 
 input[type='date'], 
 input[type=password] {
@@ -69,6 +81,11 @@ input[type=password] {
     outline: none;
 }
 
+textarea {
+    
+}
+
+textarea:hover,
 input[type=text]:hover, 
 input[type=date]:hover, 
 .ant-calendar-picker-input:hover,
@@ -79,6 +96,7 @@ input[type=password]:hover {
     box-shadow: 0 0 1px 1px var(--color-accent-base);
 }
 
+textarea:focus,
 input[type=text]:focus, 
 input[type=date]:focus, 
 .ant-calendar-picker-input:focus,
@@ -87,6 +105,8 @@ input[type=password]:focus {
     box-shadow: 0 0 1px 1px var(--color-accent-base);
 }
 
+.app-button,
+.btn-upload,
 input[type=submit] {
     border: none;
     padding: 8px 24px;
@@ -96,11 +116,26 @@ input[type=submit] {
     width: 100%;
 }
 
+.btn-upload {
+    position: relative;
+}
+
+.btn-upload input[type=file] {
+    opacity: 0;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+}
+
+.app-button:hover,
 input[type=submit]:hover {
     background: var(--color-gray7);
     color: var(--color-black);
 }
 
+.app-button:focus,
 input[type=submit]:focus {
     background: var(--color-black);
     color: var(--color-white);
@@ -151,7 +186,6 @@ button:focus,
     color: var(--color-accent) !important;
 }
 
-
 .profile-img {
     width: 100%;
     display: inline-block;
@@ -170,6 +204,14 @@ button:focus,
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.header {
+    height: 10vh;
+}
+
+.user-select-none {
+    user-select: none;
 }
 
 .preview-image-modal>.ant-modal-content {

@@ -14,18 +14,19 @@
                           fill="#ffffff"></path>
                 </svg></i> </span>
     </ng-template>
-    <app-nav-header [title]="title"
+    <app-nav-header backUrl="/lover" [title]="title"
                     [extraContent]="extra"></app-nav-header>
 </div>
 
 <div id="content" class="container ">
-    <div class="row d-flex flex-row flex-wrap align-items-center justify-content-center">
-        <div class="col-6 col-md-4 col-xl-3 album-card"
+    <div class="row d-flex user-select-none flex-row flex-wrap align-items-center justify-content-center">
+        <div [@isClicked]="album.status === 'clicked' ? 'clicked':'normal'" class="col-6 col-md-4 col-xl-3 album-card"
              *ngFor="let album of albums">
+             <!-- border -->
             <div class="rounded w-100 d-flex flex-column justify-content-around position-relative"
                  [class.border]="!album.coverImageUrl"
                  *ngIf="!album.coverImageUrl">
-                <div class="position-relative">
+                <div (click)="onAlbumCardClicked(album)"  >
                     <span class="d-flex flex-column my-5 justify-content-center align-items-center">
                         <i nz-icon
                            style="font-size: 48px;">
@@ -49,56 +50,34 @@
                     <img *ngIf="album.coverImageUrl"
                          [src]="album.coverImageUrl"
                          alt="cover image">
-            
-                    <!-- 遮罩 -->
-                    <div class="mask rounded-top">
-                        <span>
-                            <!-- 删除按钮 -->
-                            <i nz-icon
-                                *ngIf="!album.coverImageUrl"
-                               (click)="confirmDeleteAlbum(album)"
-                               class="text-white btn-icon"
-                               style="font-size: 24px;">
-                                <svg t="1582009902657"
-                                     viewBox="0 0 1024 1024"
-                                     version="1.1"
-                                     xmlns="http://www.w3.org/2000/svg"
-                                     p-id="4832">
-                                    <path d="M713.4 776.3c-11.2 0-20.2-9.4-20.2-21V357.1c0-11.5 9-20.9 20.2-20.9 11.1 0 20.2 9.4 20.2 20.9v398.2c0 11.6-9.1 21-20.2 21m-202.6 0c-11.1 0-20.2-9.4-20.2-21V357.1c0-11.5 9.1-20.9 20.2-20.9 11.2 0 20.2 9.4 20.2 20.9v398.2c0 11.6-9.1 21-20.2 21m-202.6 0c-11.2 0-20.2-9.4-20.2-21V357.1c0-11.5 9-20.9 20.2-20.9s20.2 9.4 20.2 20.9v398.2c0 11.6-9 21-20.2 21M645.9 42.6c12.8 0 27.1 17.2 27.1 41.9v62.8H348.6V84.6c0-24.7 14.3-41.9 27.1-41.9h270.2m0-41.9H375.7c-37.3 0-67.5 37.5-67.5 83.9v104.8h405.2V84.7c0-46.4-30.3-83.9-67.5-83.9"
-                                          p-id="4833"></path>
-                                    <path d="M982.1 189.4H39.4c-11.1 0-20.2-9.4-20.2-20.9 0-11.5 9.1-20.9 20.2-20.9h942.7c11.2 0 20.2 9.4 20.2 20.9 0.1 11.5-9 20.9-20.2 20.9"
-                                          p-id="4834"></path>
-                                    <path d="M826.4 1013.7H195.1c-54.6 0-99.2-51-99.2-113.6V159.5h40.5v740.7c0 39.5 26.3 71.6 58.6 71.6h631.3c32.4 0 58.7-32.1 58.7-71.6V159.5h40.5v740.7c0.1 62.6-44.4 113.5-99.1 113.5"
-                                          p-id="4835"></path>
-                                </svg>
-                            </i>
-                        </span>
-                        <span>
-                            <!-- 编辑按钮 -->
-                            <i nz-icon
-                                *ngIf="!album.coverImageUrl"
-                               (click)="openUpdateAlbumModal(album)"
-                               class="text-white btn-icon"
-                               style="font-size: 24px;">
-                            <svg t="1582040476353"
-                                 viewBox="0 0 1024 1024"
-                                 version="1.1"
-                                 xmlns="http://www.w3.org/2000/svg"
-                                 p-id="4916">
-                                <path d="M850.622159 29.124904c-31.331849-33.126756-82.334296-33.126756-113.660501 0L672.525631 97.602293l151.494653 160.582075 64.441672-68.454812c31.676155-33.143689 31.676155-87.019116 0-120.168449l-37.839797-40.436203z m-208.683321 100.514783l-421.684577 447.919568V587.01356h36.411774v36.417418h36.417418v36.417418h36.417418v36.411774h36.411774V748.318113l427.882085-458.090707-151.855892-160.587719zM183.836843 616.516635l-15.663103 16.379936-57.166089 219.238276 223.21755-69.555462 12.378084-13.484379h-17.102414v-36.411774h-36.417418v-36.417418h-36.417418v-36.411774h-36.411774v-36.417418H183.836843v-6.919987z m-43.704289 338.672958v68.810407h758.528762v-68.810407H140.132554z"
-                                      p-id="4917"
-                                      fill="#ffffff"></path>
-                            </svg>
-                            </i>
-                        </span>
-                    </div>
                 </div>
             
-                <div class="d-flex align-items-center justify-content-center border-top py-1">
-                    <div >
-                        
-                    </div>
-                    <span>{{album.name}}({{album.photosCount}})</span>
+                <div nz-dropdown
+                     [nzDropdownMenu]="menu"
+                     [nzTrigger]="'click'"
+                     class="d-flex align-items-center position-relative justify-content-center border-top py-1">
+                    <span nzPlacement="bottomCenter">{{album.name}}({{album.photosCount}})
+                
+                    </span>
+                    <nz-dropdown-menu #menu="nzDropdownMenu">
+                        <ul nz-menu
+                            nzSelectable
+                            class="user-select-none">
+                            <li nz-menu-item
+                                (click)="openUpdateAlbumModal(album)">
+                                <i nz-icon
+                                   nzType="edit"
+                                   nzTheme="outline"></i>
+                                编辑</li>
+                            <li nz-menu-item
+                                (click)="confirmDeleteAlbum(album)">
+                                <i nz-icon
+                                   nzType="delete"
+                                   nzTheme="outline"></i>
+                                删除
+                            </li>
+                        </ul>
+                    </nz-dropdown-menu>
                 </div>
             </div>
         </div>

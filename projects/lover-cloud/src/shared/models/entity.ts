@@ -1,6 +1,10 @@
 import { IEntity } from './ientity';
+import {  IStatus, StatusImplement } from './IStatus';
 
-export class Entity implements IEntity {
+
+export class Entity extends StatusImplement implements IEntity  {
+   
     public id: string;
-    public status: 'none'|'deleting'|'error_delete'|'loading'|'error_load'|'updating'|'error_update' = 'none';
+
+
 }
