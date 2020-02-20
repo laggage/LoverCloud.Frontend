@@ -3,12 +3,7 @@
         <i nz-icon
            class="text-white"
            (click)="navigateToUploadImage()">
-            <svg t="1582093327807"
-                 class="icon"
-                 viewBox="0 0 1024 1024"
-                 version="1.1"
-                 xmlns="http://www.w3.org/2000/svg"
-                 p-id="5736"
+            <svg viewBox="0 0 1024 1024"
                  width="32"
                  height="32">
                 <path d="M662.63 545.37l-128-128a32 32 0 0 0-45.25 0l-128 128a32 32 0 1 0 45.25 45.25L480 517.25V872a32 32 0 0 0 64 0V517.25l73.37 73.37a32 32 0 1 0 45.25-45.25z"
@@ -22,3 +17,143 @@
                     [title]="'相册: '+album.name"
                     [extraContent]="extra"></app-nav-header>
 </div>
+
+<div id="content"
+     class="container-fluid px-1 px-sm-3 pt-3">
+    <div class="jumbotron py-2 mb-3 max-vh-30">
+        <p class="mw-100  my-0"> 相册
+            <span class="font-weight-bolder text-nowrap text-truncate overflow-hidden"> {{album.name}} </span> 共包含图片
+            <span class=" font-weight-bolder"> {{ album.photosCount }} </span> 张
+        </p>
+    </div>
+    <div class="row">
+        <div class="col col-12 col-sm-6 mb-3"
+             *ngFor="let image of images">
+            <div class="image-item rounded shadow-sm">
+                <div class="image-wrapper rounded-top position-relative">
+                    <img class="img-clipable rounded-top"
+                         (click)="previewImage(image)"
+                         *ngIf="image.status!=='loading'"
+                         [src]="image.thumbUrl"
+                         alt="image">
+                    <!-- 遮罩 -->
+                    <div *ngIf="image.status === 'loading' || image.status === 'deleting' || image.status === 'error_delete'"
+                         class="app-mask rounded-top ">
+                        <div class="h-100 d-flex flex-column align-items-center justify-content-center">
+                            <app-spin [size]="48"></app-spin>
+                            <span class="text-white"> {{ image.statusDescription }} </span>
+                        </div>
+                    </div>
+                </div>
+                <div
+                     class="image-item-content py-2 px-2 bg-gray-light rounded-bottom d-flex flex-row align-items-center justify-content-between">
+                    <div class="d-flex flex-row align-items-center"
+                         style="height: 24px;">
+                        <!-- 用户头像 -->
+                        <div class="position-relative mr-2">
+                            <nz-avatar [nzSize]="24"
+                                       [nzIcon]="'user'"
+                                       [nzSrc]="image.getUploaderFromUser(user) && image.getUploaderFromUser(user).profileImage ? image.getUploaderFromUser(user).profileImage.thumbUrl: null">
+                            </nz-avatar>
+
+
+                            <div class="mr-2 d-flex align-items-center justify-content-center"
+                                 style="top: 0; left: 0; width: 100%; height: 100%; position: absolute;">
+                                <app-spin [size]="24"
+                                          *ngIf="!(image.getUploaderFromUser(user) && image.getUploaderFromUser(user).profileImage ) || image.getUploaderFromUser(user).profileImage.status === 'loading'">
+                                </app-spin>
+                            </div>
+                        </div>
+                        <!-- 男生图标 -->
+                        <i nz-icon
+                           class="mr-2"
+                           *ngIf="image.getUploaderFromUser(user) ? image.getUploaderFromUser(user).sex === 1 : false"
+                           style="font-size: 18px;">
+                            <svg viewBox="0 0 1024 1024"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path d="M493.9008 530.0992a138.24 138.24 0 1 0 40.4992 97.7664 137.8048 137.8048 0 0 0-40.4992-97.7664z"
+                                      fill="#80CBF2"
+                                      p-id="3306"></path>
+                                <path d="M512 0C229.2224 0 0 229.2224 0 512s229.2224 512 512 512 512-229.2224 512-512S794.7776 0 512 0z m257.3056 512a25.6 25.6 0 0 1-51.2 0v-169.9072l-171.136 171.136a189.44 189.44 0 1 1-36.224-36.1728l171.1616-171.1616H512a25.6 25.6 0 0 1 0-51.2h234.24l1.0496 0.1536 1.4336 0.2304 1.2032 0.2816 1.2288 0.3072 1.1776 0.4096 1.2032 0.4352 1.0496 0.4864 1.2032 0.5888 0.9728 0.5888 1.1776 0.7168 1.024 0.7424 0.9984 0.7424c0.5888 0.4864 1.152 0.9984 1.6896 1.536l0.1792 0.1536 0.1536 0.1792c0.5376 0.5376 1.0496 1.1008 1.536 1.6896s0.4864 0.64 0.7168 0.9728 0.5376 0.6912 0.768 1.0496 0.4608 0.7424 0.6912 1.1264 0.4096 0.6656 0.5888 1.024 0.384 0.768 0.5632 1.1776 0.3584 0.7168 0.512 1.1008 0.2816 0.768 0.4096 1.152 0.3072 0.7936 0.4352 1.2288 0.2048 0.768 0.3072 1.152 0.2304 0.8448 0.3072 1.28 0.128 0.8704 0.2048 1.3056 0.128 0.768 0.1792 1.152v2.4064z"
+                                      fill="#80CBF2"
+                                      p-id="3307"></path>
+                            </svg>
+                        </i>
+                        <!-- 女生图标 -->
+                        <i nz-icon
+                           class=" mr-2"
+                           *ngIf="image.getUploaderFromUser(user) ? image.getUploaderFromUser(user).sex === 2 : false"
+                           style="font-size: 18px;">
+                            <svg viewBox="0 0 1024 1024">
+                                <path d="M512 512m-477.866667 0a477.866667 477.866667 0 1 0 955.733334 0 477.866667 477.866667 0 1 0-955.733334 0Z"
+                                      fill="#DA4074"
+                                      p-id="4286"></path>
+                                <path d="M561.288533 246.510933a214.6304 214.6304 0 0 0-214.664533 214.596267c0 47.445333 15.598933 91.136 41.642667 126.702933l-30.4128 30.481067-56.32-56.32s-22.528-22.528-45.056 0c-22.493867 22.459733 0 45.021867 0 45.021867l56.32 56.285866-56.32 56.32 45.056 44.987734 56.32-56.285867 56.32 56.285867s22.493867 22.528 45.021866 0c22.528-22.459733 0-44.987733 0-44.987734l-56.285866-56.32 30.242133-30.242133a213.504 213.504 0 0 0 128.136533 42.769067 214.698667 214.698667 0 0 0 0-429.294934m-2.2528 363.997867a148.514133 148.514133 0 1 1 0-297.028267 148.514133 148.514133 0 0 1 0 297.028267"
+                                      fill="#FFFFFF"
+                                      p-id="4287"></path>
+                            </svg>
+                        </i>
+                    </div>
+                    <div class="d-flex flex-row align-items-center image-item-operation">
+                        <a [href]="image.thumbUrl"
+                           style="color: inherit;"
+                           class="d-flex flex-row mr-2 align-items-center"
+                           [download]="image.name?image.name:'未命名'+'.jpeg'">
+                            <i nz-icon
+                               nzType="cloud-download"
+                               style="font-size: 18px;"
+                               nzTheme="outline">
+                            </i>
+                        </a>
+                        <!-- 下载图片 -->
+
+                        <!-- 预览 -->
+                        <i nz-icon
+                           style="font-size: 18px;"
+                           (click)="previewImage(image)">
+                            <svg viewBox="0 0 1024 1024">
+                                <path d="M512 251.853c192.768 0 358.707 113.1 436.378 276.275H1024c-82.022-202.394-280.218-345.293-512-345.293S82.022 325.735 0 528.128h75.674C153.344 364.954 319.284 251.853 512 251.853z m0 552.55c-192.717 0-358.656-113.05-436.326-276.275H0c82.022 202.445 280.166 345.344 512 345.344s430.029-142.9 512-345.344h-75.674C870.707 691.354 704.768 804.403 512 804.403zM327.834 528.128a184.115 184.115 0 1 0 368.281 0.051 184.115 184.115 0 0 0-368.281-0.051z m299.315 0a115.2 115.2 0 1 1-230.298 0 115.2 115.2 0 0 1 230.298 0z m0 0"
+                                      p-id="1932"></path>
+                            </svg>
+                        </i>
+                        <!-- 编辑 -->
+                        <i nz-icon
+                           nzType="edit"
+                           style="font-size: 18px;" (click)="beginEditImage(image)"
+                           nzTheme="outline"></i>
+                        <i nz-icon
+                           nzType="delete"
+                           nzTheme="outline"
+                           style="font-size: 18px;"
+                           (click)="confirmDeleteImage(image)"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<nz-modal [nzTitle]="'编辑图片信息'"
+          [(nzVisible)]="editingImage"
+          (nzOnCancel)="cancleEditImage()"
+          (nzOnOk)="editImage(editingImage)"
+          [nzStyle]="{top: '40px'}">
+    <div *ngIf="editingImage">
+        <label for="imageName">为图片设置一个名字</label>
+        <input type="text"
+               class="mb-2"
+               name="imageName"
+               placeholder="图片名称"
+               [(ngModel)]="editingImage.name">
+        <label for="imageDescription">为图片添加一个描述</label>
+        <textarea type="text"
+                  class="mb-2"
+                  rows="3"
+                  name="imageDescription"
+                  placeholder="图片描述"
+                  [(ngModel)]="editingImage.description"></textarea>
+        <label for="imageTakenTime">设置照片的拍摄日期</label>
+        <nz-date-picker name="imageTakenTime" [(ngModel)]="editingImage.photoTakenDate"
+                        [nzPlaceHolder]="'照片拍摄日期'"></nz-date-picker>
+    </div>
+</nz-modal>

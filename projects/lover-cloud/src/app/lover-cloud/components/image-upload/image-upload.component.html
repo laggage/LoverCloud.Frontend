@@ -1,5 +1,5 @@
 <div class="header">
-    <app-nav-header title="上传图片"></app-nav-header>
+    <app-nav-header [backUrl]="'/lover/images'" [navigationExtras]="navigationExtras" title="上传图片"></app-nav-header>
 </div>
 
 <div id="content"
@@ -12,12 +12,54 @@
         </p>
         <p *ngIf="images.length > 0"
            class="my-0">图片数量: <span [class.text-danger]="images.length >= 12">
-               {{ images.length }}张</span> 
-               <span class="text-danger" *ngIf="images.length >= 12">(一次最多选择这么多图片上传)</span>
-            </p>
+                {{ images.length }}张</span>
+            <span class="text-danger"
+                  *ngIf="images.length >= 12">(一次最多选择这么多图片上传)</span>
+        </p>
     </div>
+
+    <!-- 上传失败的图片 -->
+    <div *ngIf="failedUploadImages.length > 0" class="mt-3">
+        <div class="row d-flex align-items-center justify-content-center">
+            <div class="upload-item col-12 col-md-6 user-select-none"
+                 *ngFor="let image of failedUploadImages">
+                <div class="rounded d-flex align-items-center">
+                    <div (click)="removeFromErrorList(image)" class="close-icon">
+                        <i nz-icon
+                           nzType="close"
+                           nzTheme="outline"></i>
+                    </div>
+                    <div class="img d-flex align-items-center justify-content-center">
+                        <img *ngIf="image.thumbUrl"
+                             class="img-clipable rounded-left"
+                             [src]="image.thumbUrl"
+                             alt="image">                  
+                        <div *ngIf="!image.thumbUrl"
+                             class="d-flex w-100 bg-mask align-items-center flex-column justify-content-center h-100">
+                            <nz-spin nzSimple
+                                     [nzIndicator]="spinTemplate"></nz-spin>
+                            <span class="text-nowrap text-white">图片正在加载</span>
+                        </div>
+                        
+                    </div>
+                    <div class="upload-item-content px-3 py-1 h-100 overflow-hidden flex-grow-1 d-flex flex-column justify-content-center align-items-center">
+                        <div style="height: 43px;"
+                             class="d-flex justify-content-center align-items-center mh-100 overflow-auto">
+                            <button (click)="reUploadImage(image)"
+                                    *ngIf="!image.name"
+                                    class="btn btn-danger text-nowrap">点击重新上传</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="upload-item col-12 col-md-6 my-0 invisible" style="height: 0;"></div>
+            <div class="upload-item col-12 col-md-6 my-0 invisible" style="height: 0;"></div>
+        </div>
+    </div>
+
     <form>
-        <div class="btn-upload w-auto d-inline-block"
+        <div class="btn-upload w-auto d-inline-block mr-2"
              [class.btn-disabled]="images.length >= 12">
             <input type="file"
                    accept="image/png,image/jpeg,image/gif,image/bmp,image/jpg"
@@ -29,11 +71,20 @@
             </span>点击选择图片
         </div>
 
-        <button *ngIf="images.length > 0" (click)="uploadImage()"
-                class="d-inline-block w-auto ml-2 app-button">开始上传</button>
-
-        <button *ngIf="images.length > 3" (click)="removeAllImages()"
-                class="d-inline-block w-auto ml-2 app-button">清空所有</button>
+        <button *ngIf="images.length > 0 && isUploading === false"
+                (click)="uploadImage()"
+                class="d-inline-block w-auto mr-2 app-button"
+                [class.btn-disabled]="isUploading">开始上传</button>
+        
+        <button *ngIf="(images.length > 3 || failedUploadImages.length > 3) && isUploading === false"
+                (click)="removeAllImages()"
+                class="d-inline-block w-auto mt-2 mt-sm-0 ml-0 app-button">清空所有</button>
+        
+        <nz-progress *ngIf="isUploading"
+                     class="ml-2"
+                     nzWidth="48"
+                     nzType="circle"
+                     [nzPercent]="progress"></nz-progress>
 
         <div class="mt-3">
             <div class="row d-flex align-items-center justify-content-center">
@@ -46,7 +97,7 @@
                                (click)="removeImage(image)"
                                nzTheme="outline"></i>
                         </div>
-                        <div class="img d-flex align-items-center justify-content-center">
+                        <div class="img d-flex align-items-center justify-content-center position-relative">
                             <img *ngIf="image.thumbUrl"
                                  class="img-clipable rounded-left"
                                  [src]="image.thumbUrl"
@@ -57,6 +108,13 @@
                                          [nzIndicator]="spinTemplate"></nz-spin>
                                 <span class="text-nowrap text-white">图片正在加载</span>
                             </div>
+                            <div *ngIf="image.status === 'loading'"
+                                 class="app-mask d-flex align-items-center justify-content-center">
+                                <nz-progress class="text-white" [nzStatus]="'active'"
+                                             [nzPercent]="image.progress"
+                                             nzType="circle"
+                                             nzWidth="48"></nz-progress>
+                            </div>
                         </div>
                         <div
                              class="upload-item-content px-3 py-1 h-100 overflow-hidden flex-grow-1 d-flex flex-column justify-content-center align-items-center">
@@ -64,7 +122,7 @@
                                  class="d-flex justify-content-center align-items-center mh-100 overflow-auto">
                                 <span *ngIf="image.name"
                                       (click)="editImageName(image)">{{image.name}}</span>
-                                <button (click)="editImageName(image)"
+                                <button [class.btn-disabled]="image.status === 'loading'" (click)="editImageName(image)"
                                         *ngIf="!image.name"
                                         class="text-nowrap app-button">点击添加名称</button>
                             </div>
@@ -74,7 +132,7 @@
                                  class="d-flex justify-content-center align-items-center overflow-auto">
                                 <span *ngIf="image.description"
                                       (click)="editImageDescription(image)">{{image.description}}</span>
-                                <button (click)="editImageDescription(image)"
+                                <button [class.btn-disabled]="image.status === 'loading'" (click)="editImageDescription(image)"
                                         *ngIf="!image.description"
                                         class="text-nowrap app-button">点击添加描述</button>
                             </div>

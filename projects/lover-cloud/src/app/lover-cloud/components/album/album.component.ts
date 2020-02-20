@@ -7,6 +7,8 @@ import { HttpResponse } from '@angular/common/http';
 import { AuthService } from '../../../authentication/services/auth.service';
 import { Router } from '@angular/router';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { User } from 'projects/lover-cloud/src/shared/models/user';
+import { UserService } from '../../../authentication/services/user.service';
 
 @Component({
   selector: 'app-album',
@@ -33,17 +35,34 @@ export class AlbumComponent implements OnInit {
   title: string = '我们的相册';
   albums: Albums = [];
   isClicked: boolean = false;
+  user: User;
+  userProfileImage: string;
+  spouseProfileImage: string;
 
   constructor(
     private modalServ: NzModalService,
     private albumServ: AlbumService,
     private messageServ: NzMessageService,
-    private router: Router
+    private router: Router,
+    private userServ: UserService
   ) { 
     this.loadAlbums();
+    this.loadUser();
   }
 
   ngOnInit(): void {
+  }
+
+  private loadUser() {
+    this.userServ.getUser().subscribe(response => {
+      if(response instanceof User) {
+        this.user = response;
+      }
+      if(this.user) {
+        this.user.getProfileImage().subscribe(o => this.userProfileImage = o);
+        this.user.spouse.getProfileImage().subscribe(o => this.spouseProfileImage = o);
+      }
+    })
   }
 
   private loadAlbums() {

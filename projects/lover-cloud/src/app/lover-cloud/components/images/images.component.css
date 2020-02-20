@@ -8,3 +8,31 @@
     background: var(--color-white);
 }
 
+
+#content {
+    height: 90vh;
+    width: 100vw;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.max-vh-30 {
+    max-height: 30vh;
+}
+
+.image-item img {
+    user-select: none;
+}
+
+.image-item .image-wrapper {
+    height: 196px;
+    background: rgba(192, 192, 192, 0.4);
+}
+
+.image-item-operation>*:not(:last-of-type) {
+    margin-right: .5rem;
+}
+
+textarea {
+    resize: none;
+}

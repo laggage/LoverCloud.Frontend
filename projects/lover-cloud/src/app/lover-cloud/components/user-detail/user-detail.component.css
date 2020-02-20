@@ -1,0 +1,25 @@
+#first {
+    height: 20vh;
+    background-color: hotpink;
+}
+
+#second {
+    height: 30vh;
+}
+
+#close-icon {
+    top: .3rem;
+    right: .5rem;
+    width: 16px;
+    height: 16px;
+}
+
+#profile-image-wrapper {
+    left: 48px;
+}
+
+#profile-image {
+    transform: translateY(50%);
+    
+}
+

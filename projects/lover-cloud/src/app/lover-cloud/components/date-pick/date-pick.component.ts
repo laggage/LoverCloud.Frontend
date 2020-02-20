@@ -1,16 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-date-pick',
   templateUrl: './date-pick.component.html',
-  styleUrls: ['./date-pick.component.css']
 })
-export class DatePickComponent implements OnInit {
-  @Input() public  date: Date;
-
-  constructor() {
-  }
-
-  ngOnInit(): void {
-  }
+export class DatePickComponent  {
+  @Input() public date: Date;
 }

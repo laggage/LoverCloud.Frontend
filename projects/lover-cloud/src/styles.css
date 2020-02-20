@@ -7,6 +7,7 @@
 @import "~ng-zorro-antd/avatar/style/index.min.css"; /* 引入组件样式 */
 @import "~ng-zorro-antd/carousel/style/index.min.css"; /* 引入组件样式 */
 @import "~ng-zorro-antd/date-picker/style/index.min.css"; /* 引入组件样式 */
+@import "~ng-zorro-antd/progress/style/index.min.css"; /* 引入组件样式 */
 
 /* 覆盖bootstrap中的这个属性, 在Antd的message组件中造成有一些不好的效果 */
 svg {
@@ -59,6 +60,19 @@ html, body {
 
 .bg-mask {
     background: var(--color-black-mask);
+}
+
+.bg-gray-light {
+    background: var(--color-gray8);
+}
+
+.app-mask {
+    background: var(--color-black-mask);
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
 }
 
 .btn-disabled {
@@ -244,4 +258,8 @@ border-color: var(--color-accent);
 
 .ant-calendar-selected-day .ant-calendar-date {
 background: var(--color-accent4);
+}
+
+.app-mask .ant-progress-text {
+    color: var(--color-white) !important;
 }

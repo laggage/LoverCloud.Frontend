@@ -1,26 +1,27 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpResponse, HttpEvent, HttpEventType, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpResponse, HttpEvent, HttpEventType, HttpRequest, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ImageAdd, Image } from '../models/image';
+import { UploadImage, Image, ImageUpdate } from '../models/image';
 import { environment } from 'projects/lover-cloud/src/environments/environment';
 import { retry, catchError, tap, last, map } from 'rxjs/operators';
 import { BaseService } from 'projects/lover-cloud/src/shared/services/base.service';
+import { ImageQueryParameters } from '../models/image-query-parameters';
+import { ResultWithLinks } from 'projects/lover-cloud/src/shared/models/result-with-links';
+import { JsonPatchDocment, JsonPatchOperation } from 'projects/lover-cloud/src/shared/models/json-patch-document';
 
 @Injectable()
 export class ImageService extends BaseService {
-
   public url: string = `${environment.apiHostUrl}${environment.imageEndpoint}`;
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
   ) {
     super();
   }
 
   public getAuthImage(url: string) {
-
     return new Observable<HttpResponse<ArrayBuffer> | ArrayBuffer | string>(s => {
-      this.http.get(url, {
+      let sub = this.http.get(url, {
         observe: 'response',
         responseType: 'arraybuffer'
       }).subscribe(response => {
@@ -39,17 +40,25 @@ export class ImageService extends BaseService {
           s.next(response);
           s.complete();
         }
-      }) // subscribe
+      }, () => {
+        s.next(null);
+        s.complete();
+      }); // subscribe
+      return {
+        unsubscribe() {
+          sub.unsubscribe();
+        }
+      }
     });
 
   }
 
-  public uploadImage(imageAdd: ImageAdd) {
-    
+  public uploadImage(imageAdd: UploadImage) {
+
     let form = new FormData();
-    for(let key in imageAdd) {
-      if(key && imageAdd[key]) {
-        if(key === '_thumbUrl') continue;
+    for (let key in imageAdd) {
+      if (key && imageAdd[key]) {
+        if (key === '_thumbUrl') continue;
         form.append(key, imageAdd[key]);
       }
     }
@@ -60,7 +69,6 @@ export class ImageService extends BaseService {
     return this.http.request(req).pipe(
       retry(2),
       map(event => this.getEventMessage(event)),
-      // last(),
       catchError(this.handleError)
     )
   }
@@ -75,11 +83,67 @@ export class ImageService extends BaseService {
       case HttpEventType.ResponseHeader:
         return 60 + 20;
       case HttpEventType.DownloadProgress:
-        return Math.round(20*event.loaded/event.total)+80;
+        return Math.round(20 * event.loaded / event.total) + 80;
       case HttpEventType.Response:
-          return event;
+        return event;
       default:
         return 0;
     }
+  }
+
+  /**
+   * 获取图片
+   * @param parameters 查询参数
+   * @param loadImage 是否加载用来渲染的图片数据
+   */
+  public getImages(parameters?: ImageQueryParameters, loadImage: boolean = false) {
+    let params = new HttpParams();
+    for(let key in parameters) {
+      params = params.append(key, parameters[key]);
+    }
+
+    return this.http.get<ResultWithLinks<Image>>(this.url, {
+      observe: 'response',
+      params: params
+    }).pipe(
+      retry(2),
+      map(o => {
+        o.body.value = o.body.value.map(x => {
+          const image = Object.assign(new Image(), x);
+          if(loadImage)
+            image.loadThumbUrl(this);
+          return image;
+        });
+        return o;
+      }),
+      catchError(this.handleError)
+    )
+  }
+
+  public deleteImage(image: Image) {
+    return this.http.delete(`${this.url}/${image.id}`, {
+      observe: 'response'
+    }).pipe(
+      retry(2),
+      catchError(this.handleError)
+    );
+  }
+
+  public patchImage(image: Image) {
+
+    let imageUpdate: ImageUpdate = ImageUpdate.fromImage(image);
+
+    let doc = new JsonPatchDocment();
+    for(let key in imageUpdate) {
+      doc.opeartions.push(new JsonPatchOperation('replace', `/${key}`, imageUpdate[key]));
+    }
+    console.log(doc.opeartions);
+
+    return this.http.patch(`${this.url}/${image.id}`, doc.opeartions, {
+      observe: 'response'
+    }).pipe(
+      retry(2),
+      catchError(this.handleError)
+    );
   }
 }

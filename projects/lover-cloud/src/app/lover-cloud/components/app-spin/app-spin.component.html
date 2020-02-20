@@ -1,0 +1,13 @@
+<div class="overflow-hidden"
+     [style.height]="size+'px'"
+     [style.width]="size+'px'">
+       <nz-spin nzSimple
+                [nzIndicator]="indicatorTemplate"></nz-spin>
+       <ng-template #indicatorTemplate>
+              <i nz-icon
+                 nzType="loading"
+                 [style.font-size]="size+'px'"
+                 [style.color]="color ? color : 'var(--color-accent-base)'">
+              </i>
+       </ng-template>
+</div>

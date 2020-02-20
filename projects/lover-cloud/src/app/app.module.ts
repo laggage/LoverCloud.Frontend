@@ -13,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserService } from './authentication/services/user.service';
 import { AuthInterceptor } from './authentication/services/auth.interceptor';
 import { BaseService } from '../shared/services/base.service';
+import { AntdModule } from '../shared/antd-module/antd-module.module';
 
 
 export const authInterceptor = [
@@ -31,6 +32,7 @@ export const authInterceptor = [
     AppRoutingModule,
     LoverCloudModule,
     AuthenticationModule,
+    AntdModule
   ],
   providers: [
     AuthService,

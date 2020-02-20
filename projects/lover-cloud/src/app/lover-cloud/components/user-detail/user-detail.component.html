@@ -1,0 +1,28 @@
+<div id="wrapper"
+     class="rounded" >
+    <div id="first"
+         class="rounded-top position-relative">
+        <div id="close-icon"
+             (click)="closeModal()"
+             class=" position-absolute">
+            <i nz-icon
+               style="font-size: 18px;">
+                <svg viewBox="0 0 1024 1024">
+                    <path d="M519.98750027 460.33437527L181.925 122.271875a42.1875 42.1875 0 1 0-59.68124973 59.62500027l338.06249946 338.090625-338.06249946 338.090625a42.1875 42.1875 0 1 0 59.653125 59.653125l338.090625-338.06250027 338.090625 338.06250027a42.1875 42.1875 0 1 0 59.653125-59.62500027l-338.06250027-338.11874973 338.06250027-338.06250027a42.1875 42.1875 0 1 0-59.653125-59.653125l-338.06250027 338.06250027z"
+                          fill="#ffffff"
+                          p-id="1962"></path>
+                </svg>
+            </i>
+        </div>
+
+        <div id="profile-image-wrapper"  class="d-flex flex-column position-absolute justify-content-end h-100">
+            <nz-avatar [nzSize]="58"
+            id="profile-image"
+                       nzIcon="user"
+                       [nzSrc]="user && user.profileImage ? user.profileImage.thumbUrl:''"></nz-avatar>
+        </div>
+    </div>
+    <div id="second">
+
+    </div>
+</div>

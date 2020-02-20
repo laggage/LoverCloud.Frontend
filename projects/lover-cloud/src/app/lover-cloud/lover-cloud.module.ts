@@ -26,10 +26,19 @@ import { AlbumService } from './services/album.service';
 import { ImageUploadComponent } from './components/image-upload/image-upload.component';
 import { ImagesComponent } from './components/images/images.component';
 import { InputComponent } from './components/input/input.component';
+import { AppModule } from '../app.module';
+import { AppSpinComponent } from './components/app-spin/app-spin.component';
+import { UserDetailComponent } from './components/user-detail/user-detail.component';
 
 
 @NgModule({
-  declarations: [LoverCloudComponent, IndexComponent, AlbumComponent, ChatComponent, LoverLogsComponent, LoverLogAddComponent, LoverProfileImageComponent, AuthenticationImageUrlPipe, ImagePreviewComponent, LoverAnniversaryComponent, DatePickComponent, AnniversaryEditComponent, NavHeaderComponent, AlbumEditComponent, ImageUploadComponent, ImagesComponent, InputComponent],
+  declarations: [
+    LoverCloudComponent,
+    IndexComponent, AlbumComponent, ChatComponent, LoverLogsComponent,
+    LoverLogAddComponent, LoverProfileImageComponent, AuthenticationImageUrlPipe,
+    ImagePreviewComponent, LoverAnniversaryComponent, DatePickComponent,
+    AnniversaryEditComponent, NavHeaderComponent, AlbumEditComponent,
+    ImageUploadComponent, ImagesComponent, InputComponent, AppSpinComponent, UserDetailComponent],
   imports: [
     CommonModule,
     LoverCloudRoutingModule,

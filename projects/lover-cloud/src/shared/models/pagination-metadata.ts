@@ -3,13 +3,18 @@ export class PaginationMetadata {
     public _pageSize?: number;
     public _pageCount?: number;
 
+    constructor(pageIndex: number, pageSize: number) {
+        this.pageIndex = pageIndex;
+        this.pageSize = pageSize;
+    }
+
     public set pageIndex(pageIndex: number) {
         this._pageIndex = pageIndex;
-        
-        if(this.pageIndex > this.pageCount) {
+
+        if (this.pageIndex > this.pageCount) {
             this._pageIndex = this.pageCount;
         }
-        if(this.pageIndex < 1) {
+        if (this.pageIndex < 1) {
             this._pageIndex = 1;
         }
     }
@@ -19,7 +24,7 @@ export class PaginationMetadata {
     }
 
     public set pageSize(pageSize: number) {
-        if(pageSize < 1) {
+        if (pageSize < 1) {
             this._pageSize = 1;
         } else {
             this._pageSize = pageSize;
@@ -31,21 +36,17 @@ export class PaginationMetadata {
 
     public set pageCount(pageCount: number) {
         this._pageCount = pageCount;
-        
-        if(this.pageCount < this.pageIndex) {
+
+        if (this.pageCount < this.pageIndex) {
             this._pageCount = this.pageIndex;
         }
-        if(this.pageCount < 1) {
+        if (this.pageCount < 1) {
             this._pageCount = 1;
         }
     }
+
     public get pageCount() {
         return this._pageCount;
-    }
-
-    constructor(pageIndex, pageSize) {
-        this.pageIndex = pageIndex;
-        this.pageSize = pageSize;
     }
 
     public get hasNext() {
@@ -57,7 +58,7 @@ export class PaginationMetadata {
     }
 
     public get hasPrevious() {
-        if(this.pageIndex > 1) {
+        if (this.pageIndex > 1) {
             return true;
         } else {
             return false;

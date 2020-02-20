@@ -19,7 +19,7 @@ export class ImagePreviewService {
       }
     } else {
       param = {
-        imageUrl: img.url
+        imageUrl: img.thumbUrl ? img.thumbUrl : img.url
       }
     }
     

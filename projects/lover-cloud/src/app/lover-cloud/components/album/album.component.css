@@ -17,7 +17,8 @@
 #content {
     height: 90vh;
     overflow-y: auto;
-    margin-top: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 }
 
 .album-card {
@@ -25,7 +26,6 @@
     align-items: center;
     justify-content: center;
     min-height: 64px;
-    /* margin: .3; */
     padding-top: 0.6rem ;
     padding-bottom: 0.6rem;
 }

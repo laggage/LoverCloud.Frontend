@@ -1,11 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
-import { ImageAdd } from '../../models/image';
+import { UploadImage, UploadImageViewModel } from '../../models/image';
 import { ImageService } from '../../services/image.service';
 import { InputComponent } from '../input/input.component';
-import { Album } from '../../models/album';
-import { ActivatedRoute } from '@angular/router';
-import { HttpResponse } from '@angular/common/http';
+import { Album, AlbumNavigation } from '../../models/album';
+import { ActivatedRoute, NavigationExtras } from '@angular/router';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-image-upload',
@@ -14,7 +14,12 @@ import { HttpResponse } from '@angular/common/http';
 })
 export class ImageUploadComponent implements OnInit {
   @Input() album: Album;
-  public images: ImageAdd[] = [];
+  public images: UploadImageViewModel[] = [];
+  public failedUploadImages: UploadImageViewModel[] = [];
+  public isUploading: boolean = false;
+  public progress: number = 0;
+  public navigationExtras: NavigationExtras = {};
+
   private maxImageCount = 12;
 
   constructor(
@@ -23,15 +28,18 @@ export class ImageUploadComponent implements OnInit {
     private modalServ: NzModalService,
     private route: ActivatedRoute
   ) { 
-    let image = new ImageAdd(null);
-    this.images.push()
   }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.album = new Album();
-      if(params)
+      if(params){
         Object.assign(this.album, params);
+        if(typeof this.album.photosCount === 'string') {
+          this.album.photosCount = Number.parseInt(this.album.photosCount);
+        }
+      }
+      this.navigationExtras.queryParams = new AlbumNavigation(this.album);
     })
   }
 
@@ -46,13 +54,18 @@ export class ImageUploadComponent implements OnInit {
         let file = input.files[i];
         let regex: RegExp = /^image\/.*/
         if (regex.test(file.type)) {
-          this.images.push(new ImageAdd(file, this.album ? this.album.id : null));
+          this.images.push(new UploadImageViewModel(file, this.album ? this.album.id : null));
         }
       }
     }
   }
 
-  removeImage(image: ImageAdd) {
+  reUploadImage(image: UploadImageViewModel) {
+    this.images.push(image);
+    this.failedUploadImages.splice(this.failedUploadImages.indexOf(image), 1);
+  }
+
+  removeImage(image: UploadImageViewModel) {
     this.images.splice(this.images.indexOf(image), 1);
   }
 
@@ -61,7 +74,7 @@ export class ImageUploadComponent implements OnInit {
       this.images.splice(0, this.images.length);
   }
 
-  editImageName(image: ImageAdd) {
+  editImageName(image: UploadImageViewModel) {
     let modal = this.modalServ.create({
       nzTitle: '编辑图片名',
       nzContent: InputComponent,
@@ -75,7 +88,7 @@ export class ImageUploadComponent implements OnInit {
     modal.afterClose.subscribe(() => modal.destroy() );
   }
 
-  editImageDescription(image: ImageAdd) {
+  editImageDescription(image: UploadImageViewModel) {
     let modal = this.modalServ.create({
       nzTitle: '编辑图片描述',
       nzContent: InputComponent,
@@ -90,15 +103,36 @@ export class ImageUploadComponent implements OnInit {
   }
 
   uploadImage() {
+    let imageToUploadCount = this.images.length;
+    this.isUploading = true;
     this.images.forEach(image => {
-      this.imageServ.uploadImage(image).subscribe(response => {
-         console.log(response);
-        if(response instanceof HttpResponse) {
+      image.status = 'loading';
+      image.name = image.name ? image.name : image.file.name;
+      this.imageServ.uploadImage(image.originUploadImageObj).subscribe(response => {
+        if(response instanceof HttpResponse && response.status === 201) {
+          image.progress = 100;
           this.message.success('上传成功');
+          this.images.splice(this.images.indexOf(image), 1);
+          image.status = 'none';
+          this.album.photosCount += 1;
+          this.navigationExtras.queryParams = new AlbumNavigation(this.album);
+        } else if(response instanceof HttpErrorResponse) {
+          this.message.error('遇到错误, 请检查网络.');
+          this.failedUploadImages.push(...this.images.splice(this.images.indexOf(image), 1));
+          image.status = 'error_load';
+        } else if(typeof response === 'number') {
+          image.progress = response;
         }
-        // if(response)
+        if(this.images.length <= 0) {
+          this.isUploading = false;
+        }
+
+        this.progress = 100 * (imageToUploadCount - this.images.length)/ imageToUploadCount;
       })
     })
-    
+  }
+
+  removeFromErrorList(image: UploadImageViewModel) {
+    this.failedUploadImages.splice(this.failedUploadImages.indexOf(image), 1);
   }
 }

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { User } from 'projects/lover-cloud/src/shared/models/user';
 import { AuthService } from './auth.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Token } from 'projects/lover-cloud/src/shared/models/token';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpResponseBase } from '@angular/common/http';
 import { environment } from 'projects/lover-cloud/src/environments/environment';
 import { catchError, retry } from 'rxjs/operators';
 import { ImageService } from '../../lover-cloud/services/image.service';
@@ -47,11 +47,12 @@ export class UserService extends BaseService {
   public getUser(refresh: boolean = false): Observable<User | HttpErrorResponse> {
     return new Observable(s => {
       let token: Token = this.authServ.getToken();
+      let sub;
       if (!token || !token.access_token || token.access_token.length < 1) {
         s.next(null);
-      }
-      if (!this.user || refresh) {
-        this.http.get<User>(this.url, {
+        s.complete();
+      } else if (!this.user || refresh) {
+        sub = this.http.get<User>(this.url, {
           observe: 'response'
         }).pipe(
           retry(2),
@@ -59,6 +60,7 @@ export class UserService extends BaseService {
         ).subscribe(u => {
           if (u.ok && u.status === 200) {
             this.user = Object.assign(new User(this.imgServ), u.body);
+            this.user.spouse = Object.assign(new User(this.imgServ), this.user.spouse);
             s.next(this.user);
           } else s.next(u as HttpErrorResponse);
           s.complete();
@@ -67,8 +69,16 @@ export class UserService extends BaseService {
         s.next(this.user);
         s.complete();
       }
+
+      return {
+        unsubscribe() {
+          if (sub instanceof Subscription) {
+            sub.unsubscribe();
+            console.log('getUser detach');
+          }
+        }
+      }
     });
   }
 
-  
 }
