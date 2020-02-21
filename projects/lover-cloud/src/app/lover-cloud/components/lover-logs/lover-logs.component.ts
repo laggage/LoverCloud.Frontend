@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, NgZone, TemplateRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, TemplateRef, OnDestroy } from '@angular/core';
 import { LoverLogs, LoverLog } from '../../models/lover-log';
 import { LoverLogService } from '../../services/lover-log.service';
 import { AuthService } from '../../../authentication/services/auth.service';
@@ -12,8 +12,6 @@ import { environment } from 'projects/lover-cloud/src/environments/environment';
 import { Links } from 'projects/lover-cloud/src/shared/models/link';
 import { NzMessageService, NzModalService, NzModalRef } from 'ng-zorro-antd';
 import { ResultWithLinks } from 'projects/lover-cloud/src/shared/models/result-with-links';
-import { LoverProfileImageComponent } from '../lover-profile-image/lover-profile-image.component';
-import { ImagePreviewComponent } from '../image-preview/image-preview.component';
 import { Images } from '../../models/image';
 import { ImagePreviewService } from '../../services/image-preview.service';
 import { TimeSpan } from 'projects/lover-cloud/src/shared/services/time-span';

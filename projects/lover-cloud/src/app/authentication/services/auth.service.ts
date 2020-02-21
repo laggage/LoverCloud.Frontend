@@ -24,7 +24,8 @@ export class AuthService extends BaseService {
   });
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) { 
     super();
   }
@@ -47,11 +48,15 @@ export class AuthService extends BaseService {
     );
   }
 
+  /**
+   * 登录/获取token
+   * @param metadata 登录元数据
+   */
   public login(metadata: { username: string, password: string, saveToken?: true }) {
     let loginMetadata: UserLoginMetadata = new UserLoginMetadata();
     loginMetadata.username = metadata.username;
     loginMetadata.password = metadata.password;
-
+    // 构造表单
     let formData: FormData = new FormData();
     for (let key in loginMetadata) {
       formData.append(key, loginMetadata[key]);
@@ -74,6 +79,14 @@ export class AuthService extends BaseService {
   }
 
   /**
+   * 登出, 删除token, 导航到登录页
+   */
+  public logout() {
+    AuthService.deleteToken();
+    this.router.navigateByUrl('auth');
+  }
+
+  /**
    * 保存身份密钥包本地存储
    * @param token 身份密钥
    */
@@ -91,10 +104,12 @@ export class AuthService extends BaseService {
   }
 
   public isAuthenticate(): boolean {
-    if (!this.getToken()) {
+    const token = this.getToken();
+    if (!token) {
       return false;
     } else {
-      return true;
+      // console.log(token.authenticationTime.getHours());
+      return !token.isExpired();
     }
   }
 

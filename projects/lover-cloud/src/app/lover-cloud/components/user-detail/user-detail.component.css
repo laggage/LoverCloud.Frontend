@@ -4,7 +4,7 @@
 }
 
 #second {
-    height: 30vh;
+    height: 25vh;
 }
 
 #close-icon {
@@ -14,12 +14,25 @@
     height: 16px;
 }
 
+#log-out {
+    bottom: .2rem;
+    right: 3rem;
+}
+
+#log-out button {
+    background: transparent;
+    border: none;
+    color: white;
+}
+
 #profile-image-wrapper {
     left: 48px;
 }
 
 #profile-image {
     transform: translateY(50%);
-    
 }
 
+#birth {
+    margin-left: 40px;
+}

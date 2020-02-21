@@ -29,6 +29,9 @@ import { InputComponent } from './components/input/input.component';
 import { AppModule } from '../app.module';
 import { AppSpinComponent } from './components/app-spin/app-spin.component';
 import { UserDetailComponent } from './components/user-detail/user-detail.component';
+import { LoverRequestService } from './services/lover-request.service';
+import { LoverRequestComponent } from './components/lover-request/lover-request.component';
+import { LoverRequestGuard } from './services/lover-request.guard';
 
 
 @NgModule({
@@ -38,7 +41,7 @@ import { UserDetailComponent } from './components/user-detail/user-detail.compon
     LoverLogAddComponent, LoverProfileImageComponent, AuthenticationImageUrlPipe,
     ImagePreviewComponent, LoverAnniversaryComponent, DatePickComponent,
     AnniversaryEditComponent, NavHeaderComponent, AlbumEditComponent,
-    ImageUploadComponent, ImagesComponent, InputComponent, AppSpinComponent, UserDetailComponent],
+    ImageUploadComponent, ImagesComponent, InputComponent, AppSpinComponent, UserDetailComponent, LoverRequestComponent],
   imports: [
     CommonModule,
     LoverCloudRoutingModule,
@@ -52,7 +55,9 @@ import { UserDetailComponent } from './components/user-detail/user-detail.compon
     LoverLogService,
     LoverService,
     AnniversaryService,
-    AlbumService
+    AlbumService,
+    LoverRequestService,
+    LoverRequestGuard
   ]
 })
 export class LoverCloudModule { }

@@ -14,6 +14,7 @@ import { UserService } from './authentication/services/user.service';
 import { AuthInterceptor } from './authentication/services/auth.interceptor';
 import { BaseService } from '../shared/services/base.service';
 import { AntdModule } from '../shared/antd-module/antd-module.module';
+import { AuthGuard } from './authentication/services/auth.guard';
 
 
 export const authInterceptor = [
@@ -39,6 +40,7 @@ export const authInterceptor = [
     authInterceptor,
     BaseService,
     UserService,
+    AuthGuard
     // {provide: UserService, useExisting: UserService}
   ],
   bootstrap: [AppComponent]

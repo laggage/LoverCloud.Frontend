@@ -31,6 +31,7 @@ export class LoverProfileImageComponent {
   }
 
   showUserDetail(user: User) {
+    let isSpouse = user.id === this.user.id;
     let modal = this.modalServ.create({
       nzFooter: null,
       nzContent: UserDetailComponent,
@@ -39,10 +40,15 @@ export class LoverProfileImageComponent {
       },
       nzClosable: false,
       nzComponentParams: {
-        user: user
+        user: user,
+        isSpouse
       },
+      nzMask: true,
       nzOnOk: () => {
 
+      },
+      nzMaskStyle: {
+        background: 'rgba(0,0,0,0.8)'
       }
     })
   }

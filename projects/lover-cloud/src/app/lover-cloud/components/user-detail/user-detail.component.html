@@ -15,14 +15,27 @@
             </i>
         </div>
 
-        <div id="profile-image-wrapper"  class="d-flex flex-column position-absolute justify-content-end h-100">
+        <div id="profile-image-wrapper"
+             class="d-flex flex-column position-absolute justify-content-end h-100">
             <nz-avatar [nzSize]="58"
-            id="profile-image"
+                       id="profile-image"
                        nzIcon="user"
                        [nzSrc]="user && user.profileImage ? user.profileImage.thumbUrl:''"></nz-avatar>
         </div>
-    </div>
-    <div id="second">
 
+        <div *ngIf="isSpouse"
+             (click)="logout()"
+             id="log-out"
+             class=" position-absolute">
+            <button>登出</button>
+        </div>
+    </div>
+    <div id="second" class="py-1">
+        <div id="username" class="w-100 d-flex justify-content-end pr-5">
+            <span> {{user.userName}} </span>
+        </div>
+        <div id="birth" class="mt-5">
+            <span class="text-muted text-monospace"> {{user.birth|date:'yyyy年M月d日'}} </span>
+        </div>
     </div>
 </div>

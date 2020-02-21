@@ -5,10 +5,5 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './auth-logo.component.html',
   styleUrls: ['./auth-logo.component.css']
 })
-export class AuthLogoComponent implements OnInit {
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+export class AuthLogoComponent {
 }

@@ -19,5 +19,4 @@ export class AuthenticationImageUrlPipe implements PipeTransform {
 
     return this.imageServ.getAuthImage(value).toPromise();
   }
-
 }

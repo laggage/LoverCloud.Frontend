@@ -13,7 +13,11 @@ export const environment = {
   userEndPoint: 'api/users',
   authentication: {
     hostUrl: 'http://192.168.0.124:3088/',
-    tokenEndPoint: 'connect/token'
+    tokenEndPoint: 'connect/token',
+    minUsernameLength: 2,
+    maxUsernameLength: 30,
+    minPasswordLength: 4,
+    maxPasswordLength: 50,
   },
   localStorageTokenKey: 'LC.Cache',
   paginationHeaderKey: 'x-pagination'

@@ -11,7 +11,7 @@
 }
 
 #imageBox {
-    max-width: 100%;
+    max-width: 100vw;
     max-height: 85vh;
     overflow: auto;
     background: none;

@@ -5,7 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 import { Token } from 'projects/lover-cloud/src/shared/models/token';
 import { HttpClient, HttpErrorResponse, HttpResponseBase } from '@angular/common/http';
 import { environment } from 'projects/lover-cloud/src/environments/environment';
-import { catchError, retry } from 'rxjs/operators';
+import { catchError, retry, last } from 'rxjs/operators';
 import { ImageService } from '../../lover-cloud/services/image.service';
 import { BaseService } from 'projects/lover-cloud/src/shared/services/base.service';
 
@@ -46,16 +46,13 @@ export class UserService extends BaseService {
 
   public getUser(refresh: boolean = false): Observable<User | HttpErrorResponse> {
     return new Observable(s => {
-      let token: Token = this.authServ.getToken();
-      let sub;
-      if (!token || !token.access_token || token.access_token.length < 1) {
-        s.next(null);
-        s.complete();
-      } else if (!this.user || refresh) {
-        sub = this.http.get<User>(this.url, {
-          observe: 'response'
+      if (!this.user || refresh) {
+        this.http.get<User>(this.url, {
+          observe: 'response',
+          params: {
+            'fields': 'id, userName, profileImageUrl, sex, birth, spouse, lover, loverLogCount, loverAlbumCount, loverAnniversaryCount',
+          }
         }).pipe(
-          retry(2),
           catchError(this.handleError)
         ).subscribe(u => {
           if (u.ok && u.status === 200) {
@@ -68,15 +65,6 @@ export class UserService extends BaseService {
       } else {
         s.next(this.user);
         s.complete();
-      }
-
-      return {
-        unsubscribe() {
-          if (sub instanceof Subscription) {
-            sub.unsubscribe();
-            console.log('getUser detach');
-          }
-        }
       }
     });
   }

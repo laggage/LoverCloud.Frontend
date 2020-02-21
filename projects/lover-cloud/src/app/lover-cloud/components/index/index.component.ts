@@ -33,9 +33,7 @@ export class IndexComponent implements OnInit {
       if (s instanceof User) {
         this.user = s;
         this.loadTotalLoveDay();
-      } else {
-        this.route.navigateByUrl('/auth');
-      }
+      } 
     });
   }
 
@@ -60,7 +58,7 @@ export class IndexComponent implements OnInit {
         onClick: (v) => {
           uploading = true;
           this.userServ.setLoveDay(v.date).subscribe(response => {
-            AuthService.toAuthPageIfUnauthorized(response, this.route);
+            // AuthService.toAuthPageIfUnauthorized(response, this.route);
             if(response.status === 204)  {
               this.message.success('操作成功');
               this.user.lover.loveDay.date = v.date;

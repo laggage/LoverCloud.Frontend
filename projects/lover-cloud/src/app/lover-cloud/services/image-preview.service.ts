@@ -30,17 +30,18 @@ export class ImagePreviewService {
       nzClosable: false,
       nzComponentParams: param,
       nzStyle: {
-        'max-height': '90%',
         'overflow': 'hidden',
         'position': 'absolute',
         'top': '50%',
         'left': '50%',
         'transform': 'translate(-50%, -50%)',
-        'max-width': '85vw',
+        'width': '100vw',
+        'padding': '0 .3rem'
       },
       nzBodyStyle: {
         'overflow-y': 'auto',
         padding: '0',
+        'max-width': '100vw',
       },
     });
     /* 需要主动回收 */

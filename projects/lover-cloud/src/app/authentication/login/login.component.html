@@ -4,37 +4,54 @@
           [formGroup]="userInfoProfile">
         <div class="form-item">
             <label>用户名:</label>
-            <input formControlName="username" placeholder="用户名"
-                   type="text">
+            <input formControlName="username"
+                   placeholder="用户名"
+                   type="text"
+                   required>
         </div>
         <div class="form-item">
             <label>密码:</label>
-            <input formControlName="password" placeholder="密码"
-                   type="password">
+            <input formControlName="password"
+                   placeholder="密码"
+                   type="password"
+                   required>
         </div>
-        <div id="status" *ngIf="logginStatus != 'none'">
-            <div class="d-flex align-items-center mt-2 ml-2" *ngIf="logginStatus === 'logging'">
+        <div id="status"
+             *ngIf="logginStatus != 'none'">
+            <div class="d-flex align-items-center mt-2 ml-2"
+                 *ngIf="logginStatus === 'logging'">
                 <ng-template #indicatorTemplate><i nz-icon
-                    nzType="loading"
-                    style="font-size: 24px;"
-                    class="text-accent"></i> </ng-template>
+                       nzType="loading"
+                       style="font-size: 24px;"
+                       class="text-accent"></i> </ng-template>
                 <nz-spin nzSimple
-                        [nzIndicator]="indicatorTemplate"> </nz-spin>
+                         [nzIndicator]="indicatorTemplate"> </nz-spin>
                 <span class="d-inline-block ml-2 text-accent">正在登录...</span>
             </div>
             <div class="mt-2"
                  *ngIf="logginStatus === 'error'">
-                <nz-alert class="w-100" nzType="error"
+                <nz-alert class="w-100"
+                          nzType="error"
                           nzMessage="Error"
                           nzDescription="登录失败, 请检查用户名或密码是否正确. {{error}}"
                           nzShowIcon>
                 </nz-alert>
             </div>
         </div>
+
+        <div *ngIf="userInfoProfile.errors && (userInfoProfile.dirty || userInfoProfile.touched)"
+             class="mt-3">
+            <span class="text-danger d-block"
+                  *ngFor="let error of userInfoProfile.errors.messages; let i= index">
+                *{{ error }} !!!
+            </span>
+        </div>
+
         <div class="mt-3 row px-3">
             <input type="submit"
                    class="col mr-2 btn"
-                   value="登录">
+                   value="登录"
+                   [class.btn-disabled]="!userInfoProfile.valid">
             <button [routerLink]="['/auth/register']"
                     routerLinkActive="router-link-active"
                     class="btn btn-secondary col ml-2">去注册</button>

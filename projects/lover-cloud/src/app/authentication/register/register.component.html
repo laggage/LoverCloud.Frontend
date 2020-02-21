@@ -1,6 +1,7 @@
 <div class="wrapper">
-    <ng-template #indicatorTemplate >
-        <div id="loading-icon" class="">
+    <ng-template #indicatorTemplate>
+        <div id="loading-icon"
+             class="">
             <i nz-icon
                class="d-block"
                nzType="loading"
@@ -11,7 +12,7 @@
     <nz-spin [nzSpinning]="status === 'uploading'"
              [nzIndicator]="indicatorTemplate"
              [nzSimple]="false">
-        <form class="form mt-3"
+        <form class="form py-3"
               [formGroup]="userInfoForm"
               (ngSubmit)="onSubmit($event)"
               enctype="multipart/form-data">
@@ -20,6 +21,8 @@
                 <nz-upload class="avatar-uploader w-auto"
                            nzName="avatar"
                            nzListType="picture-card"
+                           [nzShowUploadList]="false"
+                           [nzBeforeUpload]="beforeImageUpload"
                            [nzFileType]="'image/png,image/jpeg,image/jpg,image/gif,image/bmp'"
                            [nzShowUploadList]="false"
                            (nzChange)="fileChange($event.file.originFileObj)">
@@ -29,13 +32,15 @@
                            [nzType]="'plus'"></i>
                         <div class="ant-upload-text">用户头像</div>
                     </ng-container>
-                    <img class="avatar profile-img"
-                         *ngIf="imgData"
-                         [src]="imgData" />
+                    <div *ngIf="imgData" style="width: 96; height: 96px;">
+                        <img class="avatar profile-img img-clipable"
+                        *ngIf="imgData"
+                        [src]="imgData" />
+                    </div>
                 </nz-upload>
 
                 <div id="status-error"
-                     *ngIf="status==='error'" 
+                     *ngIf="status==='error'"
                      class="overflow-auto"
                      style="max-height: 98px;">
                     <nz-alert nzType="error"
@@ -88,14 +93,16 @@
                        placeholder="用于登录的密码">
             </div>
 
-            <div id="status">
-                <div id="status-uploading">
-
-                </div>
+            <div id="errors"
+                class="mt-3"
+                 *ngIf="userInfoForm.errors && (userInfoForm.dirty || userInfoForm.touched)">
+                <span class="d-block text-danger"
+                      *ngFor="let message of userInfoForm.errors.messages">
+                    *{{message}}
+                </span>
             </div>
-
             <div class="mt-3 row px-3">
-                <input type="submit"
+                <input [class.btn-disabled]="!userInfoForm.valid" type="submit"
                        class="col mr-2 btn"
                        value="确定">
                 <button [routerLink]="['/auth/login']"
