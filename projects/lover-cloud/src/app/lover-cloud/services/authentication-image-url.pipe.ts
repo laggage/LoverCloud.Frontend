@@ -2,14 +2,13 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { ImageService } from './image.service';
 
 @Pipe({
-  name: 'authenticationImageUrl'
+  name: 'authenticationImageUrl',
 })
 export class AuthenticationImageUrlPipe implements PipeTransform {
 
   constructor(
     private imageServ: ImageService
   ) {
-
   }
   transform(value: string) {
     let reg: RegExp = /^https?:\/\//

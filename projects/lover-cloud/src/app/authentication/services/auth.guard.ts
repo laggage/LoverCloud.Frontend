@@ -18,11 +18,9 @@ export class AuthGuard implements CanActivate,CanActivateChild, CanLoad {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    console.log('auth guard');
       const result = this.checkLogin();
     if(!result) this.router.navigate(['/auth']);
-    return result
-    // this.checkLover().then(x => x && result);
+    return result;
   }
 
   canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
@@ -30,7 +28,6 @@ export class AuthGuard implements CanActivate,CanActivateChild, CanLoad {
   }
 
   canLoad(route: import("@angular/router").Route, segments: import("@angular/router").UrlSegment[]): boolean | Observable<boolean> | Promise<boolean> {
-    // console.log('auth guard can load');
     return this.canActivate(null, null) as boolean;
   }
 
@@ -38,11 +35,5 @@ export class AuthGuard implements CanActivate,CanActivateChild, CanLoad {
     return this.authServ.isAuthenticate();
   }
 
-  public async checkLover() {
-    const user: User = await this.userServ.getUser().toPromise() as User;
-    const result = !!(user && user.lover && user.spouse);
-    if(!result) this.router.navigate(['lover/loverRequest']);
-    console.log('checkLover: '+ result)
-    return result
-  }
+ 
 }

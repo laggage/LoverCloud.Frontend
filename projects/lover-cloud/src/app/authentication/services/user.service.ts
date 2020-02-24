@@ -5,9 +5,10 @@ import { Observable, Subscription } from 'rxjs';
 import { Token } from 'projects/lover-cloud/src/shared/models/token';
 import { HttpClient, HttpErrorResponse, HttpResponseBase } from '@angular/common/http';
 import { environment } from 'projects/lover-cloud/src/environments/environment';
-import { catchError, retry, last } from 'rxjs/operators';
+import { catchError, retry, last, map } from 'rxjs/operators';
 import { ImageService } from '../../lover-cloud/services/image.service';
 import { BaseService } from 'projects/lover-cloud/src/shared/services/base.service';
+import { ResultWithLinks } from 'projects/lover-cloud/src/shared/models/result-with-links';
 
 @Injectable()
 export class UserService extends BaseService {
@@ -18,7 +19,7 @@ export class UserService extends BaseService {
     private authServ: AuthService,
     private http: HttpClient,
     private imgServ: ImageService
-  ) { 
+  ) {
     super();
   }
 
@@ -44,20 +45,24 @@ export class UserService extends BaseService {
     );
   }
 
-  public getUser(refresh: boolean = false): Observable<User | HttpErrorResponse> {
+  public getUser(
+    refresh: boolean = false,
+    fields = 'id, userName, profileImageUrl, sex, birth, spouse, lover, loverLogCount, loverAlbumCount, loverAnniversaryCount'): Observable<User | HttpErrorResponse> {
     return new Observable(s => {
       if (!this.user || refresh) {
-        this.http.get<User>(this.url, {
+        this.http.get<User>(`${this.url}/login`, {
           observe: 'response',
           params: {
-            'fields': 'id, userName, profileImageUrl, sex, birth, spouse, lover, loverLogCount, loverAlbumCount, loverAnniversaryCount',
+            'fields': fields,
           }
         }).pipe(
           catchError(this.handleError)
         ).subscribe(u => {
           if (u.ok && u.status === 200) {
             this.user = Object.assign(new User(this.imgServ), u.body);
-            this.user.spouse = Object.assign(new User(this.imgServ), this.user.spouse);
+            this.user.spouse = this.user.lover && this.user.spouse
+              ? Object.assign(new User(this.imgServ), this.user.spouse)
+              : null;
             s.next(this.user);
           } else s.next(u as HttpErrorResponse);
           s.complete();
@@ -67,6 +72,21 @@ export class UserService extends BaseService {
         s.complete();
       }
     });
+  }
+
+  searchUser$(username: string) {
+    return this.http.get<ResultWithLinks<User>>(this.url, {
+      observe: 'response',
+      params: {
+        username: username
+      }
+    }).pipe(
+      map(x => {
+        x.body.value = x.body.value.map(u => Object.assign(new User(this.imgServ), u));
+        return x;
+      }),
+      catchError(this.handleError)
+    );
   }
 
 }

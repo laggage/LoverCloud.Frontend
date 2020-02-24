@@ -1,6 +1,6 @@
 <div id="content">
     <div id="imageBox">
-        <img [src]=" (imageUrl|authenticationImageUrl|async)"
+        <img [src]="image ? (image.thumbUrl && image.thumbUrl.length > 0 ? image.thumbUrl:null) : (imageUrl|authenticationImageUrl|async)"
              class="rounded d-block mx-auto"
              alt="image"
              (load)="onImageLoaded($event)">

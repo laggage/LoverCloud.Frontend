@@ -108,7 +108,6 @@ export class AuthService extends BaseService {
     if (!token) {
       return false;
     } else {
-      // console.log(token.authenticationTime.getHours());
       return !token.isExpired();
     }
   }

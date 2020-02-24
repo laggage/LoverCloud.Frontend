@@ -1,0 +1,198 @@
+<div id="wrapper">
+
+    <div class="container-fluid">
+        <div id="head"
+             class="text-center mb-3">
+            <h1 class="">寻找你的伴侣</h1>
+            <div id="user-info"
+                 class="w-100">
+                <div
+                     class="border-left border-info rounded-left d-flex align-items-stretch justify-content-start px-3 py-2">
+                    <nz-avatar [nzSize]="64"
+                               class="mr-3"
+                               [nzSrc]="user && user.profileImage ? user.profileImage.thumbUrl:null"></nz-avatar>
+                    <div *ngIf="user"
+                         class="d-flex flex-column justify-content-around">
+                        <span> {{user.userName}} </span>
+                        <div class="d-flex align-items-center">
+                            <span class="mr-2">{{ user.sex === 1 ? '男':'女' }}</span>
+                            <i nz-icon
+                               *ngIf="user.sex === 1"
+                               style="font-size: 18px;">
+                                <svg viewBox="0 0 1024 1024"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M493.9008 530.0992a138.24 138.24 0 1 0 40.4992 97.7664 137.8048 137.8048 0 0 0-40.4992-97.7664z"
+                                          fill="#80CBF2"
+                                          p-id="3306"></path>
+                                    <path d="M512 0C229.2224 0 0 229.2224 0 512s229.2224 512 512 512 512-229.2224 512-512S794.7776 0 512 0z m257.3056 512a25.6 25.6 0 0 1-51.2 0v-169.9072l-171.136 171.136a189.44 189.44 0 1 1-36.224-36.1728l171.1616-171.1616H512a25.6 25.6 0 0 1 0-51.2h234.24l1.0496 0.1536 1.4336 0.2304 1.2032 0.2816 1.2288 0.3072 1.1776 0.4096 1.2032 0.4352 1.0496 0.4864 1.2032 0.5888 0.9728 0.5888 1.1776 0.7168 1.024 0.7424 0.9984 0.7424c0.5888 0.4864 1.152 0.9984 1.6896 1.536l0.1792 0.1536 0.1536 0.1792c0.5376 0.5376 1.0496 1.1008 1.536 1.6896s0.4864 0.64 0.7168 0.9728 0.5376 0.6912 0.768 1.0496 0.4608 0.7424 0.6912 1.1264 0.4096 0.6656 0.5888 1.024 0.384 0.768 0.5632 1.1776 0.3584 0.7168 0.512 1.1008 0.2816 0.768 0.4096 1.152 0.3072 0.7936 0.4352 1.2288 0.2048 0.768 0.3072 1.152 0.2304 0.8448 0.3072 1.28 0.128 0.8704 0.2048 1.3056 0.128 0.768 0.1792 1.152v2.4064z"
+                                          fill="#80CBF2"
+                                          p-id="3307"></path>
+                                </svg>
+                            </i>
+                            <!-- 女生图标 -->
+                            <i nz-icon
+                               *ngIf="user.sex !== 1"
+                               style="font-size: 18px;">
+                                <svg viewBox="0 0 1024 1024">
+                                    <path d="M512 512m-477.866667 0a477.866667 477.866667 0 1 0 955.733334 0 477.866667 477.866667 0 1 0-955.733334 0Z"
+                                          fill="#DA4074"
+                                          p-id="4286"></path>
+                                    <path d="M561.288533 246.510933a214.6304 214.6304 0 0 0-214.664533 214.596267c0 47.445333 15.598933 91.136 41.642667 126.702933l-30.4128 30.481067-56.32-56.32s-22.528-22.528-45.056 0c-22.493867 22.459733 0 45.021867 0 45.021867l56.32 56.285866-56.32 56.32 45.056 44.987734 56.32-56.285867 56.32 56.285867s22.493867 22.528 45.021866 0c22.528-22.459733 0-44.987733 0-44.987734l-56.285866-56.32 30.242133-30.242133a213.504 213.504 0 0 0 128.136533 42.769067 214.698667 214.698667 0 0 0 0-429.294934m-2.2528 363.997867a148.514133 148.514133 0 1 1 0-297.028267 148.514133 148.514133 0 0 1 0 297.028267"
+                                          fill="#FFFFFF"
+                                          p-id="4287"></path>
+                                </svg>
+                            </i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <nz-collapse class="col mb-3">
+                <!-- 发出的告白 -->
+                <nz-collapse-panel [nzHeader]="'我发出的告白'+(loverRequests.length>0?('('+loverRequests.length+')'):'')">
+                    <div class="lover-request-list">
+                        <div *ngFor="let request of loverRequests"
+                             class="col-12 col-sm-6 mb-2">
+                            <div class="border-left px-2">
+                                <span> {{request.requestDate|date:'yyyy MM-d HH:mm:ss'}} </span>
+                                <div>
+                                    <span class="font-weight-bolder">我</span>
+                                    <span>向</span>
+                                    <span class="mx-1">
+                                        <nz-avatar [nzSize]="20"
+                                                   [nzIcon]="'user'"
+                                                   [nzSrc]="request.receiver&&request.receiver.profileImage&&request.receiver.profileImage.thumbUrl?request.receiver.profileImage.thumbUrl:null">
+                                        </nz-avatar>
+                                    </span>
+                                    <span> {{request.receiver.userName}} </span>
+                                    <span>告白</span>
+                                </div>
+                                <div class="text-info">
+                                    <span *ngIf="request.succeed"> 对方已接受你的告白, 请刷新页面 </span>
+                                    <span *ngIf="request.succeed === null || request.succeed === undefined"> 正在等待对方处理
+                                    </span>
+                                    <span *ngIf="request.succeed === false"> 对方拒绝了你 </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="!loverRequests || loverRequests.length <= 0">你还没有发出任何告白</div>
+                    </div>
+                </nz-collapse-panel>
+
+                <!-- 收到的告白 -->
+                <nz-collapse-panel
+                                   [nzHeader]="'我收到的告白'+(receivedLoverRequests.length>0?('('+receivedLoverRequests.length)+')':'')">
+                    <div class="lover-request-list">
+                        <div *ngFor="let request of receivedLoverRequests"
+                             class="col-12 col-sm-6">
+                            <div class="border-left px-2">
+                                <span> {{request.requestDate|date:'yyyy MM-d HH:mm:ss'}} </span>
+                                <div>
+                                    <span>收到来自</span>
+                                    <span class="mx-1">
+                                        <nz-avatar [nzSize]="20"
+                                                   [nzIcon]="'user'"
+                                                   [nzSrc]="request.requester&&request.requester.profileImage&&request.requester.profileImage.thumbUrl?request.requester.profileImage.thumbUrl:null">
+                                        </nz-avatar>
+                                    </span>
+                                    <span class="font-weight-bolder"> {{request.requester.userName}} </span>
+                                    <span>告白</span>
+                                </div>
+                                <div class="w-100 d-flex flew-row">
+                                    <button [class.btn-disabled]="request.status === 'updating' || request.succeed != null|| request.succeed != undefined"
+                                            (click)="agreeLoverRequest(request)"
+                                            class="app-button w-auto py-1 mr-1">接受</button>
+                                    <button (click)="agreeLoverRequest(request)"
+                                            [class.btn-disabled]="request.status === 'updating'|| request.succeed != null|| request.succeed != undefined"
+                                            class="app-button w-auto py-1">拒绝</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div *ngIf="!receivedLoverRequests || receivedLoverRequests.length <= 0">
+                            你还没有收到任何告白</div>
+                    </div>
+                </nz-collapse-panel>
+            </nz-collapse>
+
+        </div>
+
+        <div id="search">
+            <form (submit)="searchUser()"
+                  class=" mb-3">
+                <div class="row d-flex align-items-center">
+                    <div class="col-8">
+                        <input type="text"
+                               name="username"
+                               placeholder="输入用户名, 查找用户"
+                               [(ngModel)]="username">
+                    </div>
+                    <div class="col-4">
+                        <button class="app-button w-100 text-nowrap mx-0 px-0"
+                                [class.btn-disabled]="isSearching || !user || !user.spouse"
+                                type="submit">查找</button>
+                    </div>
+                </div>
+            </form>
+
+            <div id="search-result"
+                 class="row"
+                 *ngIf="users && users.length > 0">
+                <div class="col-12 col-sm-6 col-md-4 overflow-hidden"
+                     *ngFor="let u of users">
+                    <div
+                         class="d-flex flex-column overflow-hidden align-items-stretch justify-content-around jumbotron text-nowrap py-3 w-100">
+                        <div class="d-flex align-items-center justify-content-center mb-2">
+                            <nz-avatar [nzIcon]="'user'"
+                                       [nzSize]="64"
+                                       class="mr-3"
+                                       [nzSrc]="u.profileImage.thumbUrl"></nz-avatar>
+                            <span class="mr-3"> {{u.userName}} </span>
+                            <div>
+                                <!-- 男生图标 -->
+                                <i nz-icon
+                                   class="mr-2"
+                                   *ngIf="u.sex === 1"
+                                   style="font-size: 18px;">
+                                    <svg viewBox="0 0 1024 1024"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M493.9008 530.0992a138.24 138.24 0 1 0 40.4992 97.7664 137.8048 137.8048 0 0 0-40.4992-97.7664z"
+                                              fill="#80CBF2"
+                                              p-id="3306"></path>
+                                        <path d="M512 0C229.2224 0 0 229.2224 0 512s229.2224 512 512 512 512-229.2224 512-512S794.7776 0 512 0z m257.3056 512a25.6 25.6 0 0 1-51.2 0v-169.9072l-171.136 171.136a189.44 189.44 0 1 1-36.224-36.1728l171.1616-171.1616H512a25.6 25.6 0 0 1 0-51.2h234.24l1.0496 0.1536 1.4336 0.2304 1.2032 0.2816 1.2288 0.3072 1.1776 0.4096 1.2032 0.4352 1.0496 0.4864 1.2032 0.5888 0.9728 0.5888 1.1776 0.7168 1.024 0.7424 0.9984 0.7424c0.5888 0.4864 1.152 0.9984 1.6896 1.536l0.1792 0.1536 0.1536 0.1792c0.5376 0.5376 1.0496 1.1008 1.536 1.6896s0.4864 0.64 0.7168 0.9728 0.5376 0.6912 0.768 1.0496 0.4608 0.7424 0.6912 1.1264 0.4096 0.6656 0.5888 1.024 0.384 0.768 0.5632 1.1776 0.3584 0.7168 0.512 1.1008 0.2816 0.768 0.4096 1.152 0.3072 0.7936 0.4352 1.2288 0.2048 0.768 0.3072 1.152 0.2304 0.8448 0.3072 1.28 0.128 0.8704 0.2048 1.3056 0.128 0.768 0.1792 1.152v2.4064z"
+                                              fill="#80CBF2"
+                                              p-id="3307"></path>
+                                    </svg>
+                                </i>
+                                <!-- 女生图标 -->
+                                <i nz-icon
+                                   class=" mr-2"
+                                   *ngIf="u.sex !== 1"
+                                   style="font-size: 18px;">
+                                    <svg viewBox="0 0 1024 1024">
+                                        <path d="M512 512m-477.866667 0a477.866667 477.866667 0 1 0 955.733334 0 477.866667 477.866667 0 1 0-955.733334 0Z"
+                                              fill="#DA4074"
+                                              p-id="4286"></path>
+                                        <path d="M561.288533 246.510933a214.6304 214.6304 0 0 0-214.664533 214.596267c0 47.445333 15.598933 91.136 41.642667 126.702933l-30.4128 30.481067-56.32-56.32s-22.528-22.528-45.056 0c-22.493867 22.459733 0 45.021867 0 45.021867l56.32 56.285866-56.32 56.32 45.056 44.987734 56.32-56.285867 56.32 56.285867s22.493867 22.528 45.021866 0c22.528-22.459733 0-44.987733 0-44.987734l-56.285866-56.32 30.242133-30.242133a213.504 213.504 0 0 0 128.136533 42.769067 214.698667 214.698667 0 0 0 0-429.294934m-2.2528 363.997867a148.514133 148.514133 0 1 1 0-297.028267 148.514133 148.514133 0 0 1 0 297.028267"
+                                              fill="#FFFFFF"
+                                              p-id="4287"></path>
+                                    </svg>
+                                </i>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column">
+                            <button class="app-button w-100"
+                                    (click)="addLoverRequest(u)"
+                                    [class.btn-disabled]="u.spouse || u.id === user.id || user.sex === u.sex || u.status === 'active'">向他告白</button>
+                            <span *ngIf="u.spouse"
+                                  class="text-wrap mt-2"> 对方已有情侣, 换一个试试 </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

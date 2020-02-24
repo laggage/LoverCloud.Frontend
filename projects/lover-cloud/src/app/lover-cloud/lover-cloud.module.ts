@@ -13,7 +13,6 @@ import { LoverLogAddComponent } from './components/lover-log-add/lover-log-add.c
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { LoverLogService } from './services/lover-log.service';
 import { LoverProfileImageComponent } from './components/lover-profile-image/lover-profile-image.component';
-import { AuthenticationImageUrlPipe } from './services/authentication-image-url.pipe';
 import { ImagePreviewComponent } from './components/image-preview/image-preview.component';
 import { LoverAnniversaryComponent } from './components/lover-anniversary/lover-anniversary.component';
 import { DatePickComponent } from './components/date-pick/date-pick.component';
@@ -26,22 +25,20 @@ import { AlbumService } from './services/album.service';
 import { ImageUploadComponent } from './components/image-upload/image-upload.component';
 import { ImagesComponent } from './components/images/images.component';
 import { InputComponent } from './components/input/input.component';
-import { AppModule } from '../app.module';
 import { AppSpinComponent } from './components/app-spin/app-spin.component';
 import { UserDetailComponent } from './components/user-detail/user-detail.component';
 import { LoverRequestService } from './services/lover-request.service';
-import { LoverRequestComponent } from './components/lover-request/lover-request.component';
-import { LoverRequestGuard } from './services/lover-request.guard';
 
 
 @NgModule({
   declarations: [
     LoverCloudComponent,
     IndexComponent, AlbumComponent, ChatComponent, LoverLogsComponent,
-    LoverLogAddComponent, LoverProfileImageComponent, AuthenticationImageUrlPipe,
+    LoverLogAddComponent, LoverProfileImageComponent,
     ImagePreviewComponent, LoverAnniversaryComponent, DatePickComponent,
     AnniversaryEditComponent, NavHeaderComponent, AlbumEditComponent,
-    ImageUploadComponent, ImagesComponent, InputComponent, AppSpinComponent, UserDetailComponent, LoverRequestComponent],
+    ImageUploadComponent, ImagesComponent, InputComponent, AppSpinComponent, 
+    UserDetailComponent],
   imports: [
     CommonModule,
     LoverCloudRoutingModule,
@@ -51,13 +48,11 @@ import { LoverRequestGuard } from './services/lover-request.guard';
   ],
   bootstrap: [LoverCloudComponent],
   providers: [
-    ImageService,
     LoverLogService,
     LoverService,
     AnniversaryService,
     AlbumService,
     LoverRequestService,
-    LoverRequestGuard
   ]
 })
 export class LoverCloudModule { }

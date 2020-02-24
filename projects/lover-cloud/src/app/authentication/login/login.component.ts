@@ -5,6 +5,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { NzMessageService } from 'ng-zorro-antd';
 import { Router } from '@angular/router';
 import { environment } from 'projects/lover-cloud/src/environments/environment';
+import { UserService } from '../services/user.service';
+import { User } from 'projects/lover-cloud/src/shared/models/user';
 
 const identityRevealedValidator: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
   const username = control.get('username');
@@ -46,6 +48,7 @@ export class LoginComponent implements OnInit {
     private authServ: AuthService,
     private message: NzMessageService,
     private router: Router,
+    private userServ: UserService
   ) {
     if (authServ.isAuthenticate()) {
       router.navigateByUrl('lover/index');
@@ -65,7 +68,14 @@ export class LoginComponent implements OnInit {
         if (s.ok) { // 登录成功
           this.logginStatus = 'success';
           this.message.success('登录成功');
-          this.router.navigateByUrl('/lover/index');
+          this.userServ.getUser().subscribe(res => {
+            if(res instanceof User && res && res.spouse && res.lover) {
+              this.router.navigateByUrl('/lover/index');
+            } else {
+              this.router.navigateByUrl('/loverRequest');
+            }
+          })
+          
         } else {
           let error = s as HttpErrorResponse;
           this.error = JSON.stringify(error, null, 2);

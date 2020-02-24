@@ -11,6 +11,7 @@ export const environment = {
   registerEndPoint: 'api/users',
   loverLogsEndPoint: 'api/lovers/logs',
   userEndPoint: 'api/users',
+  loverRequestEndPoint: 'api/lovers/loverrequests',
   authentication: {
     hostUrl: 'http://192.168.0.124:3088/',
     tokenEndPoint: 'connect/token',

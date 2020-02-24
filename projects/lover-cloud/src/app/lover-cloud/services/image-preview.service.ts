@@ -2,24 +2,28 @@ import { Injectable } from '@angular/core';
 import { NzModalService } from 'ng-zorro-antd';
 import { Image } from '../models/image';
 import { ImagePreviewComponent } from '../components/image-preview/image-preview.component';
+import { ImageService } from './image.service';
 
 @Injectable()
 export class ImagePreviewService {
 
   constructor(
-    private modalServ: NzModalService
+    private modalServ: NzModalService,
+    private imageServ: ImageService
   ) {
   }
 
   public previewImage(img: Image|string) {
     let param = null;
-    if(typeof img === 'string') {
+    if (typeof img === 'string') {
       param = {
         imageUrl: img
       }
     } else {
+      img = Object.assign(new Image(), img);
+      !img.thumbUrl ? img.loadThumbUrl(this.imageServ) : null;
       param = {
-        imageUrl: img.thumbUrl ? img.thumbUrl : img.url
+        image: img
       }
     }
     

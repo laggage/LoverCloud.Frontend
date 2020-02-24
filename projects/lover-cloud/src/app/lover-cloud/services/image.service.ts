@@ -137,7 +137,6 @@ export class ImageService extends BaseService {
     for(let key in imageUpdate) {
       doc.opeartions.push(new JsonPatchOperation('replace', `/${key}`, imageUpdate[key]));
     }
-    console.log(doc.opeartions);
 
     return this.http.patch(`${this.url}/${image.id}`, doc.opeartions, {
       observe: 'response'
