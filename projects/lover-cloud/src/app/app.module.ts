@@ -15,6 +15,8 @@ import { AuthInterceptor } from './authentication/services/auth.interceptor';
 import { BaseService } from '../shared/services/base.service';
 import { AntdModule } from '../shared/antd-module/antd-module.module';
 import { AuthGuard } from './authentication/services/auth.guard';
+import { ImageService } from './lover-cloud/services/image.service';
+import { NoLoverGuard } from './authentication/services/no-lover.guard';
 
 
 export const authInterceptor = [
@@ -40,7 +42,9 @@ export const authInterceptor = [
     authInterceptor,
     BaseService,
     UserService,
-    AuthGuard
+    AuthGuard,
+    NoLoverGuard,
+    ImageService
     // {provide: UserService, useExisting: UserService}
   ],
   bootstrap: [AppComponent]

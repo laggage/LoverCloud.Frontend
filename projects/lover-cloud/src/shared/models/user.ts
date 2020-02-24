@@ -5,6 +5,8 @@ import { Lover } from '../../app/lover-cloud/models/lover';
 import { Observable, Subscription } from 'rxjs';
 import { take, shareReplay } from 'rxjs/operators';
 import { Image } from '../../app/lover-cloud/models/image';
+import { IStatus } from './IStatus';
+import { Entity } from './entity';
 
 const getProfileImage = () => {
     return new Observable<string>(observer => {
@@ -13,7 +15,6 @@ const getProfileImage = () => {
             if(this.profileImageUrl) {
                 sub = this.imgServ.getAuthImage(this.profileImageUrl).subscribe(response => {
                     if(typeof response === 'string') {
-                        console.log('getProfileImage successed')
                         this._profileImageThumbUrl = response;
                         observer.next(this._profileImageThumbUrl);
                         observer.complete();
@@ -26,7 +27,6 @@ const getProfileImage = () => {
         } else {
             observer.next(this._profileImageThumbUrl);
             observer.complete();
-            console.log('get profile image from cache')
             return {
                 unsubscribe(){}
             }
@@ -34,8 +34,7 @@ const getProfileImage = () => {
     });
 }
 
-export class User {
-    public id: string;
+export class User extends Entity {
     public token: Token;
     public userName: string;
     public sex: Sex;
@@ -49,6 +48,7 @@ export class User {
     public lover: Lover;
 
     constructor(private imgServ: ImageService) {
+        super();
     }
 
     private _profileImageThumbUrl: string;
@@ -70,7 +70,6 @@ export class User {
                 if(this.profileImageUrl) {
                     sub = this.imgServ.getAuthImage(this.profileImageUrl).subscribe(response => {
                         if(typeof response === 'string') {
-                            console.log('getProfileImage successed')
                             this._profileImageThumbUrl = response;
                             observer.next(this._profileImageThumbUrl);
                             observer.complete();

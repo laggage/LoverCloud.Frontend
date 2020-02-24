@@ -1,4 +1,4 @@
-type Status = 'none'|'clicked'|'deleting'|'error_delete'|'loading'|'loaded'|'error_load'|'updating'|'error_update';
+type Status = 'none'|'clicked'|'deleting'|'error_delete'|'loading'|'loaded'|'error_load'|'updating'|'error_update'|'active'|'inactive';
 
 
 export interface IStatus {

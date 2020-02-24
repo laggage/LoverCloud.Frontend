@@ -20,10 +20,8 @@ export class Token {
             this.expires_in = Number.parseInt(this.expires_in);
         }
 
-        console.log(this);
         const now = new Date();
         const timeGap = (now.valueOf() - this.authenticationTime.valueOf())/1000; // ms/1000 => s
-        console.log(timeGap > this.expires_in);
         return timeGap > this.expires_in;
     }
 }

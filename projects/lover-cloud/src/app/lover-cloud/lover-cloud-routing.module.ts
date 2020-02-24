@@ -11,13 +11,12 @@ import { LoverAnniversaryComponent } from './components/lover-anniversary/lover-
 import { ImagesComponent } from './components/images/images.component';
 import { ImageUploadComponent } from './components/image-upload/image-upload.component';
 import { AuthGuard } from '../authentication/services/auth.guard';
-import { LoverRequestComponent } from './components/lover-request/lover-request.component';
-import { LoverRequestGuard } from './services/lover-request.guard';
+import { LoverGuard } from '../authentication/services/lover.guard';
 
 const routes: Routes = [
   {
-    canActivate: [AuthGuard],
-    canActivateChild: [AuthGuard],
+    canActivate: [AuthGuard, LoverGuard],
+    canActivateChild: [AuthGuard, LoverGuard],
     path: 'lover', component: LoverCloudComponent, children: [
       { path: 'index', component: IndexComponent },
       { path: '', component: IndexComponent },
@@ -28,7 +27,6 @@ const routes: Routes = [
       { path: 'anniversary', component: LoverAnniversaryComponent },
       { path: 'images', component: ImagesComponent },
       { path: 'images/upload', component: ImageUploadComponent },
-      { path: 'loverRequest', component: LoverRequestComponent, canActivate: [LoverRequestGuard] }
     ]
   },
 ];

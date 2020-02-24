@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './authentication/services/auth.guard';
+import { LoverGuard } from './authentication/services/lover.guard';
 
 
 const routes: Routes = [
@@ -13,12 +14,13 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   { path: 'lover', redirectTo: 'lover/index' },
+  { path: 'loverRequest', redirectTo: 'auth/loverRequest' },
   {
     path: 'lover',
     loadChildren: () =>
       import('./lover-cloud/lover-cloud.module')
         .then(m => m.LoverCloudModule),
-    canLoad: [AuthGuard]
+    canLoad: [AuthGuard, LoverGuard]
   },
   { path: '', redirectTo: '/auth/login', pathMatch: 'full' }
 ];

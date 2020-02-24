@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Image as LoverCloudImage } from '../../models/image';
 
 @Component({
   selector: 'app-image-preview',
@@ -7,6 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ImagePreviewComponent implements OnInit {
   @Input() public imageUrl: string;
+  @Input() public image: LoverCloudImage
   public imgHeight: number;
   public imgWidth: number;
 
@@ -15,7 +17,7 @@ export class ImagePreviewComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onImageLoaded(event) {
+  onImageLoaded(event: any) {
     if (event.target instanceof HTMLImageElement) {
       let img = new Image();
       img.src = event.target.src;

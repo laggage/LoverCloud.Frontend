@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NzSpinModule, NZ_ICONS, NzIconModule, NzAlertModule, NzMessageModule, NzUploadModule, NzAvatarModule, NzAffixModule, NzPageHeaderModule, NzInputModule, NzTimelineModule, NzModalModule, NzCarouselModule, NzDatePickerModule, NZ_CONFIG, NzConfig, NzDropDownModule, NzProgressModule } from 'ng-zorro-antd';
+import { NzSpinModule, NZ_ICONS, NzIconModule, NzAlertModule, NzMessageModule, NzUploadModule, NzAvatarModule, NzAffixModule, NzPageHeaderModule, NzInputModule, NzTimelineModule, NzModalModule, NzCarouselModule, NzDatePickerModule, NZ_CONFIG, NzConfig, NzDropDownModule, NzProgressModule, NzCollapseModule } from 'ng-zorro-antd';
 import { IconDefinition } from '@ant-design/icons-angular';
 import * as AllIcons from '@ant-design/icons-angular/icons';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/zh';
+import { AuthenticationImageUrlPipe } from '../../app/lover-cloud/services/authentication-image-url.pipe';
 registerLocaleData(en);
 
 const antDesignIcons = AllIcons as {
@@ -19,7 +20,9 @@ const ngZorroConfig: NzConfig = {
 };
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    AuthenticationImageUrlPipe
+  ],
   imports: [
     CommonModule,
   ],
@@ -38,7 +41,9 @@ const ngZorroConfig: NzConfig = {
     NzCarouselModule,
     NzDatePickerModule,
     NzDropDownModule,
-    NzProgressModule
+    NzProgressModule,
+    AuthenticationImageUrlPipe,
+    NzCollapseModule
   ],
   providers: [
     { provide: NZ_ICONS, useValue: icons },
