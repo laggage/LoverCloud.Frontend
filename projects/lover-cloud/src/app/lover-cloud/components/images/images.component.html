@@ -34,7 +34,7 @@
                     <img class="img-clipable rounded-top"
                          (click)="previewImage(image)"
                          *ngIf="image.status!=='loading'"
-                         [src]="image.thumbUrl"
+                         [src]="image.thumbUrl?image.thumbUrl:''"
                          alt="image">
                     <!-- 遮罩 -->
                     <div *ngIf="image.status === 'loading' || image.status === 'deleting' || image.status === 'error_delete'"

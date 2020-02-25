@@ -76,7 +76,7 @@ export class LoginComponent implements OnInit {
             }
           })
           
-        } else {
+        } else { // 登陆失败
           let error = s as HttpErrorResponse;
           this.error = JSON.stringify(error, null, 2);
           this.logginStatus = 'error';

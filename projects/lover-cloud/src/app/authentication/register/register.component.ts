@@ -98,7 +98,7 @@ export class RegisterComponent implements OnInit {
     let sexText: '男' | '女' = this.userInfoForm.get('sex').value;
     let userAdd: UserAddResource = this.userInfoForm.value as UserAddResource;
 
-    userAdd.sex = sexText === '男' ? Sex.female : Sex.male;
+    userAdd.sex = sexText === '男' ? Sex.male : Sex.female;
     userAdd = Object.assign(new UserAddResource(), userAdd);
 
     userAdd.profileImage = this.profileImage;

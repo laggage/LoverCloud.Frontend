@@ -6,6 +6,7 @@ import * as AllIcons from '@ant-design/icons-angular/icons';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/zh';
 import { AuthenticationImageUrlPipe } from '../../app/lover-cloud/services/authentication-image-url.pipe';
+import { AppSpinComponent } from '../../app/lover-cloud/components/app-spin/app-spin.component';
 registerLocaleData(en);
 
 const antDesignIcons = AllIcons as {
@@ -21,10 +22,13 @@ const ngZorroConfig: NzConfig = {
 
 @NgModule({
   declarations: [
-    AuthenticationImageUrlPipe
+    AuthenticationImageUrlPipe,
+    AppSpinComponent,
   ],
   imports: [
     CommonModule,
+    NzIconModule,
+    NzSpinModule,
   ],
   exports: [
     NzIconModule,
@@ -43,7 +47,8 @@ const ngZorroConfig: NzConfig = {
     NzDropDownModule,
     NzProgressModule,
     AuthenticationImageUrlPipe,
-    NzCollapseModule
+    NzCollapseModule,
+    AppSpinComponent
   ],
   providers: [
     { provide: NZ_ICONS, useValue: icons },

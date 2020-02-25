@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiHostUrl: 'http://192.168.0.124:3089/',
+  apiHostUrl: 'https://love.laggage.top:5210/',
   imageEndpoint: 'api/lovers/photos',
   anniversaryEndPoint: 'api/lovers/anniversaries',
   albumEndpoint: 'api/lovers/albums',
@@ -9,7 +9,7 @@ export const environment = {
   userEndPoint: 'api/users',
   loverRequestEndPoint: 'api/lovers/loverrequests',
   authentication: {
-    hostUrl: 'http://192.168.0.124:3088/',
+    hostUrl: 'https://love.laggage.top:5210/',
     tokenEndPoint: 'connect/token',
     minUsernameLength: 2,
     maxUsernameLength: 30,

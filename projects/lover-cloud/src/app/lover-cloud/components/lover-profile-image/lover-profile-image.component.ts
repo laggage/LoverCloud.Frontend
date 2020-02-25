@@ -6,6 +6,7 @@ import { HttpErrorResponse, HttpResponseBase } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { NzModalService } from 'ng-zorro-antd';
 import { UserDetailComponent } from '../user-detail/user-detail.component';
+import { ImageService } from '../../services/image.service';
 
 @Component({
   selector: 'app-lover-profile-image',
@@ -18,7 +19,8 @@ export class LoverProfileImageComponent {
   constructor(
     private userServ: UserService,
     private router: Router,
-    private modalServ: NzModalService
+    private modalServ: NzModalService,
+    private imageServ: ImageService
   ) {
     this.userServ.getUser().subscribe(response => {
       if (response instanceof HttpResponseBase) {
@@ -26,6 +28,8 @@ export class LoverProfileImageComponent {
       }
       else if (response instanceof User) {
         this.user = response as User;
+        this.user.spouse = Object.assign(
+          new User(this.imageServ), this.user.spouse);
       }
     });
   }
@@ -45,11 +49,11 @@ export class LoverProfileImageComponent {
       },
       nzMask: true,
       nzOnOk: () => {
-
       },
       nzMaskStyle: {
         background: 'rgba(0,0,0,0.8)'
       }
-    })
+    });
+    modal.afterClose.subscribe(() => modal.destroy());
   }
 }

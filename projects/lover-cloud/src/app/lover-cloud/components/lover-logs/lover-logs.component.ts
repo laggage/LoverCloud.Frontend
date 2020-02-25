@@ -103,7 +103,7 @@ export class LoverLogsComponent implements OnInit, OnDestroy {
               x.creater = users.find(u => u.id === x.createrId);
               return x;
             });
-
+            console.log(this.loverLogs);
             this.dataStatus = 'success';
           } else {
             this.message.error('抱歉, 获取数据失败, 请检查网络');

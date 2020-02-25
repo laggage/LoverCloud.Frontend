@@ -75,6 +75,9 @@ html, body {
     height: 100%;
 }
 
+.btn-disabled:active,
+.btn-disabled:focus,
+.btn-disabled:hover,
 .btn-disabled {
     pointer-events: none;
     opacity: 0.6;
@@ -144,20 +147,14 @@ input[type=submit] {
 }
 
 .app-button:hover,
-input[type=submit]:hover {
+input[type=submit]:not(.btn-disabled):hover {
     background: var(--color-gray7);
     color: var(--color-black);
 }
 
 .app-button:focus,
-input[type=submit]:focus {
+input[type=submit]:not(.btn-disabled):focus {
     background: var(--color-black);
-    color: var(--color-white);
-}
-
-input[type=submit]:disabled {
-    opacity: 0.6;
-    background: var(--color-accent);
     color: var(--color-white);
 }
 

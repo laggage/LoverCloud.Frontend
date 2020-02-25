@@ -51,10 +51,17 @@
             <input type="submit"
                    class="col mr-2 btn"
                    value="登录"
-                   [class.btn-disabled]="!userInfoProfile.valid">
+                   [class.btn-disabled]="!userInfoProfile.valid || logginStatus === 'logging'">
             <button [routerLink]="['/auth/register']"
                     routerLinkActive="router-link-active"
                     class="btn btn-secondary col ml-2">去注册</button>
         </div>
     </form>
+</div>
+
+<div *ngIf="logginStatus === 'success'" id="mask-success">
+    <div id="mask-success-content">
+        <app-spin [size]="64"></app-spin>
+        <span class="text-white py-2">请稍后...</span> 
+    </div>
 </div>

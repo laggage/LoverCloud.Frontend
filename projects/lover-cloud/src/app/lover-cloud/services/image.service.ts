@@ -20,6 +20,10 @@ export class ImageService extends BaseService {
   }
 
   public getAuthImage(url: string) {
+    const reg: RegExp = /^https?:\/\//;
+    if(!reg.test(url)) {
+      url = `${environment.apiHostUrl.substr(0, environment.apiHostUrl.length-1)}${url}`
+    }
     return new Observable<HttpResponse<ArrayBuffer> | ArrayBuffer | string>(s => {
       let sub = this.http.get(url, {
         observe: 'response',
@@ -101,7 +105,6 @@ export class ImageService extends BaseService {
     for(let key in parameters) {
       params = params.append(key, parameters[key]);
     }
-
     return this.http.get<ResultWithLinks<Image>>(this.url, {
       observe: 'response',
       params: params
@@ -110,10 +113,11 @@ export class ImageService extends BaseService {
       map(o => {
         o.body.value = o.body.value.map(x => {
           const image = Object.assign(new Image(), x);
-          if(loadImage)
-            image.loadThumbUrl(this);
           return image;
         });
+        // o.body.value.forEach(o => {
+        //   o.loadThumbUrl(this);
+        // })
         return o;
       }),
       catchError(this.handleError)

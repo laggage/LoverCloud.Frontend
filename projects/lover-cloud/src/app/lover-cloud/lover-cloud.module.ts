@@ -25,7 +25,6 @@ import { AlbumService } from './services/album.service';
 import { ImageUploadComponent } from './components/image-upload/image-upload.component';
 import { ImagesComponent } from './components/images/images.component';
 import { InputComponent } from './components/input/input.component';
-import { AppSpinComponent } from './components/app-spin/app-spin.component';
 import { UserDetailComponent } from './components/user-detail/user-detail.component';
 import { LoverRequestService } from './services/lover-request.service';
 
@@ -37,7 +36,7 @@ import { LoverRequestService } from './services/lover-request.service';
     LoverLogAddComponent, LoverProfileImageComponent,
     ImagePreviewComponent, LoverAnniversaryComponent, DatePickComponent,
     AnniversaryEditComponent, NavHeaderComponent, AlbumEditComponent,
-    ImageUploadComponent, ImagesComponent, InputComponent, AppSpinComponent, 
+    ImageUploadComponent, ImagesComponent, InputComponent,
     UserDetailComponent],
   imports: [
     CommonModule,

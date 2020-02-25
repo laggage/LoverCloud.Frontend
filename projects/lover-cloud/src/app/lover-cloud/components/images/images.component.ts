@@ -64,9 +64,10 @@ export class ImagesComponent implements OnInit {
     }, true).subscribe(response => {
       if(response instanceof HttpResponse) {
         this.images = response.body.value;
+        this.images.forEach(x => x.loadThumbUrl(this.imageServ))
         this.paginationMetadata = JSON.parse(
           response.headers.getAll(environment.paginationHeaderKey)[0]
-        )
+        );
       }
     })
   }

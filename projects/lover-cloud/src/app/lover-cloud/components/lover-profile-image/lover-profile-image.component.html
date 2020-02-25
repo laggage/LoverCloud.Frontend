@@ -7,6 +7,6 @@
     <nz-avatar nzIcon="user"
                class="ml-1"
                (click)="showUserDetail(user.spouse)"
-               [nzSrc]="user && user.spouse && user.spouse.profileImage && user.spouse.profileImage.thumbUrl ? user.spouse.profileImage.thumbUrl : null"
+               [nzSrc]="user && user.spouse ? user.spouse.profileImage.thumbUrl : null"
                [nzSize]="64"></nz-avatar>
 </div>

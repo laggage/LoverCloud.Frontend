@@ -6,6 +6,7 @@ import { LoverRequest, LoverRequests, LoverRequestAdd } from '../../lover-cloud/
 import { HttpResponse } from '@angular/common/http';
 import { ImageService } from '../../lover-cloud/services/image.service';
 import { NzMessageService } from 'ng-zorro-antd';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-lover-request',
@@ -24,7 +25,8 @@ export class LoverRequestComponent implements OnInit {
     private loverRequestServ: LoverRequestService,
     private userServ: UserService,
     private imageServ: ImageService,
-    private messageServ: NzMessageService
+    private messageServ: NzMessageService,
+    private authServ: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -109,6 +111,10 @@ export class LoverRequestComponent implements OnInit {
         this.messageServ.error(`${res.status}:操作失败`);
       }
     });
+  }
+
+  logout() {
+    this.authServ.logout();
   }
 
 }
