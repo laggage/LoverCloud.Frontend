@@ -147,7 +147,7 @@ export class AlbumComponent implements OnInit {
   private newAlbum(album: Album) {
     this.albumServ.add(AlbumAdd.fromAlbum(album)).subscribe(response => {
       if(response && response.status === 201 && response instanceof HttpResponse) {
-        this.albums.push(response.body);
+        this.albums.push(Object.assign(new Album(), response.body));
       } else {
         this.messageServ.error('新建相册失败');
       }

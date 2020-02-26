@@ -20,14 +20,13 @@
 </div>
 
 <div id="content"
-     class="container">
+     class="container-fluid">
     <div class="row d-flex user-select-none flex-row align-items-center justify-content-center">
         <div [@isClicked]="album.status === 'clicked' ? 'clicked':'normal'"
              class="col-6 col-md-4 col-xl-3 album-card"
              *ngFor="let album of albums">
             <!-- border -->
-            <div class="rounded w-100 d-flex border flex-column justify-content-around position-relative"
-                 >
+            <div class="rounded w-100 d-flex border flex-column justify-content-around position-relative">
                 <div class="position-relative"
                      style="height: 200px;"
                      (click)="onAlbumCardClicked(album)">
@@ -68,9 +67,11 @@
                                    [nzSize]="24"
                                    nzIcon="user"
                                    class="mr-1"
-                                   [nzSrc]="album.getCreaterFromUser(user).sex === 1 ? userProfileImage : spouseProfileImage"></nz-avatar>
+                                   [nzSrc]="album.getCreaterFromUser(user).sex === 1 ? userProfileImage : spouseProfileImage">
+                        </nz-avatar>
                         <!-- 男生图标 -->
-                        <span class="d-flex flex-row align-items-center" *ngIf="album.getCreaterFromUser(user).sex === 1">
+                        <span class="d-flex flex-row align-items-center"
+                              *ngIf="album.getCreaterFromUser(user).sex === 1">
                             <svg viewBox="0 0 1024 1024"
                                  xmlns="http://www.w3.org/2000/svg"
                                  width="18"
@@ -100,7 +101,7 @@
                     </div>
                     <span class="text-nowrap text-truncate">{{album.name}}({{album.photosCount}})</span>
                     <!-- 下拉菜单 -->
-                    <nz-dropdown-menu #menu="nzDropdownMenu" >
+                    <nz-dropdown-menu #menu="nzDropdownMenu">
                         <ul nz-menu
                             nzSelectable
                             class="user-select-none">
