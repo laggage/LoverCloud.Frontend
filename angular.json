@@ -116,7 +116,6 @@
             "tsConfig": "projects/lover-cloud/tsconfig.spec.json",
             "karmaConfig": "projects/lover-cloud/karma.conf.js",
             "assets": [
-              "projects/lover-cloud/src/favicon.ico",
               "projects/lover-cloud/src/assets"
             ],
             "styles": [
