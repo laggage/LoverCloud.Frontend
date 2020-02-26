@@ -71,7 +71,6 @@ export class ImageService extends BaseService {
     })
 
     return this.http.request(req).pipe(
-      retry(2),
       map(event => this.getEventMessage(event)),
       catchError(this.handleError)
     )

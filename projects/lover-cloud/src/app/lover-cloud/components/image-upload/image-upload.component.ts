@@ -32,29 +32,35 @@ export class ImageUploadComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
+      // 从路由参数中获取相册信息
       this.album = new Album();
-      if(params){
+      if (params) {
         Object.assign(this.album, params);
-        if(typeof this.album.photosCount === 'string') {
-          this.album.photosCount = Number.parseInt(this.album.photosCount);
-        }
+        // 传参时number类型可能变为strin类型, 手动转回number类型
+        this.album.photosCount = typeof this.album.photosCount === 'string'
+          ? Number.parseInt(this.album.photosCount) 
+          : this.album.photosCount;
       }
       this.navigationExtras.queryParams = new AlbumNavigation(this.album);
-    })
+    });
   }
 
   onFileChange(event: Event) {
     let input = event.target;
     if (input instanceof HTMLInputElement) {
       for (let i = 0; i < input.files.length; i++) {
-        if(this.images.length >= this.maxImageCount) {
+        if (this.images.length >= this.maxImageCount) {
           this.message.info('图片数量达到上限');
           return;
         }
         let file = input.files[i];
         let regex: RegExp = /^image\/.*/
         if (regex.test(file.type)) {
-          this.images.push(new UploadImageViewModel(file, this.album ? this.album.id : null));
+          this.images.push(
+            new UploadImageViewModel(
+              file,
+              this.album ? this.album.id : null,
+              file.name && file.name.length > 0 ? file.name : null));
         }
       }
     }
@@ -116,7 +122,7 @@ export class ImageUploadComponent implements OnInit {
           image.status = 'none';
           this.album.photosCount += 1;
           this.navigationExtras.queryParams = new AlbumNavigation(this.album);
-        } else if(response instanceof HttpErrorResponse) {
+        } else if(response instanceof HttpErrorResponse) { // 上传失败
           this.message.error('遇到错误, 请检查网络.');
           this.failedUploadImages.push(...this.images.splice(this.images.indexOf(image), 1));
           image.status = 'error_load';
@@ -126,8 +132,7 @@ export class ImageUploadComponent implements OnInit {
         if(this.images.length <= 0) {
           this.isUploading = false;
         }
-
-        this.progress = 100 * (imageToUploadCount - this.images.length)/ imageToUploadCount;
+        this.progress = Math.round(100 * (imageToUploadCount - this.images.length)/ imageToUploadCount);
       })
     })
   }
